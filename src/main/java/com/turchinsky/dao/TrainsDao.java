@@ -39,19 +39,32 @@ public class TrainsDao implements Dao<TrainEntity> {
         return query.getResultList();
     }
 
+//    @Override
+//    public TrainEntity save(TrainEntity trainEntity) {
+//        TrainEntity entity = null;
+//        try {
+//            Query query = entityManager.createQuery("SELECT e FROM TrainEntity e WHERE e.name= '" + trainEntity
+//                    .getName() + "' and e.capacity = " + trainEntity.getCapacity());
+//
+//            entity = (TrainEntity) query.getSingleResult();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        entityManager.getTransaction().begin();
+//        if (entity == null) {
+//            entityManager.persist(trainEntity);
+//        } else {
+//            trainEntity = entityManager.merge(trainEntity);
+//        }
+//        entityManager.getTransaction().commit();
+//        return trainEntity;
+//    }
+
+
     @Override
     public TrainEntity save(TrainEntity trainEntity) {
-        TrainEntity entity = null;
-        try {
-            Query query = entityManager.createQuery("SELECT e FROM TrainEntity e WHERE e.name= '" + trainEntity
-                    .getName() + "' and e.capacity = " + trainEntity.getCapacity());
-
-            entity = (TrainEntity) query.getSingleResult();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         entityManager.getTransaction().begin();
-        if (entity == null) {
+        if (trainEntity.getId() == 0) {
             entityManager.persist(trainEntity);
         } else {
             trainEntity = entityManager.merge(trainEntity);

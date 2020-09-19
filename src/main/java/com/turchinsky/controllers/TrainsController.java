@@ -41,14 +41,30 @@ public class TrainsController {
         return "trains/new-train";
     }
 
-    @PostMapping
+    @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
         if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
-            /// TODO: 9/18/2020 Let TrainsService decide what input is valid and return int
             return "redirect:/trains";
         } else {
             return "redirect:/trains/new-train";
+        }
+    }
+
+    @GetMapping("/{id}/update-train")
+    public String changeTrain(@PathVariable("id") int id, Model model){
+        model.addAttribute("trainEntity",trainsService.getTrainEntity(id));
+        return "trains/update-train";
+    }
+
+    @PostMapping("/{id}")
+    public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity){
+        if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
+            trainsService.save(trainEntity);
+            String redirect = "redirect:/trains/" + trainEntity.getId();
+            return redirect;
+        } else {
+            return "redirect:/trains/update-train";
         }
     }
 

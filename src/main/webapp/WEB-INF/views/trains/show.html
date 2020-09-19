@@ -9,6 +9,8 @@
 <p th:text="${trainEntity.getId()}">VALUE</p>
 <p th:text="${trainEntity.getName()}">VALUE</p>
 <p th:text="${trainEntity.getCapacity()}">VALUE</p>
+<p> <a class="btn btn-primary" th:href="@{/trains/{id}/update-train(id=${trainEntity.getId()})}" role="button">Update train</a> </p>
+<!--<p> <a class="btn btn-primary" th:href="/trains/${trainEntity.getId()}/update" role="button">Change train</a></p>-->
 
 </body>
 </html>

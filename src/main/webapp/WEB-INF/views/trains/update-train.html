@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Train</title>
+</head>
+<body>
+
+
+
+<form th:method="POST" th:action="@{/trains/{id}(id=${trainEntity.getId()})}" th:object="${trainEntity}">
+    <p th:text="${trainEntity.getId()}">VALUE</p>
+<!--    <p th:text="${trainEntity.getName()}">VALUE</p>-->
+    <p>
+        <label for="name">Change Name</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    </p>
+<!--    <p th:text="${trainEntity.getCapacity()}">VALUE</p>-->
+    <p>
+        <label for="capacity">Change Capacity</label>
+        <input type="number" min="0" th:field="*{capacity}" id="capacity" placeholder="Capacity">
+    </p>
+    <p>
+        <input type="submit" value="Update Train">
+    </p>
+</form>
+
+
+
+
+<!--<p> <a class="btn btn-primary" href="#" role="button">Change train</a></p>-->
+</body>
+</html>
