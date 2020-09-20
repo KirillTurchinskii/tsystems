@@ -51,21 +51,32 @@ public class TrainsController {
         }
     }
 
-    @GetMapping("/{id}/update-train")
-    public String changeTrain(@PathVariable("id") int id, Model model){
-        model.addAttribute("trainEntity",trainsService.getTrainEntity(id));
+    @GetMapping("/{id}/update")
+    public String changeTrain(@PathVariable("id") int id, Model model) {
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/update-train";
     }
 
     @PostMapping("/{id}")
-    public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity){
+        public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
         if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
-            String redirect = "redirect:/trains/" + trainEntity.getId();
-            return redirect;
+            return "redirect:/trains/" + trainEntity.getId();
         } else {
-            return "redirect:/trains/update-train";
+            return "redirect:/trains/"+trainEntity.getId()+"/update";
         }
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteTrain(@PathVariable("id")int id, Model model){
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        return "trains/delete-alert";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
+        trainsService.deleteTrain(trainEntity);
+        return "redirect:/trains";
     }
 
 }

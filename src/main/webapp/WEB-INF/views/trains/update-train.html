@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Train</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -13,21 +15,18 @@
 <!--    <p th:text="${trainEntity.getName()}">VALUE</p>-->
     <p>
         <label for="name">Change Name</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Name">
+        <input type="text" th:field="*{name}" id="name" th:placeholder="*{name}">
     </p>
 <!--    <p th:text="${trainEntity.getCapacity()}">VALUE</p>-->
     <p>
         <label for="capacity">Change Capacity</label>
-        <input type="number" min="0" th:field="*{capacity}" id="capacity" placeholder="Capacity">
+        <input type="number" min="0" th:field="*{capacity}" id="capacity" th:placeholder="*{capacity}">
     </p>
     <p>
         <input type="submit" value="Update Train">
+
     </p>
 </form>
 
-
-
-
-<!--<p> <a class="btn btn-primary" href="#" role="button">Change train</a></p>-->
 </body>
 </html>

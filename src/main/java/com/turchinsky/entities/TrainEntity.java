@@ -2,6 +2,8 @@ package com.turchinsky.entities;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "trains")
@@ -16,6 +18,11 @@ public class TrainEntity {
 
     @Column
     private int capacity;
+
+//    @ManyToMany
+//    @JoinTable(joinColumns = @JoinColumn(name = "train_id"),
+//    inverseJoinColumns = @JoinColumn(name = "station_id"))
+//    private List<Station> station = new ArrayList<>();
 
     public TrainEntity(String name, int capacity) {
         this.name = name;

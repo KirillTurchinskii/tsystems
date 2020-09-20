@@ -33,7 +33,8 @@ public class TrainsService {
     }
 
     public void deleteTrain(TrainEntity trainEntity) {
-        trainsDao.delete(trainEntity);
+        TrainEntity managedEntity = getTrainEntity(trainEntity.getId());
+        trainsDao.delete(managedEntity);
     }
 
 //    private void validate(TrainEntity trainEntity) {

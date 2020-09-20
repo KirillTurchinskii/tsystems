@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Train</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+</head>
+<body>
+<form th:method="post" th:action="@{/trains/delete}" th:object="${trainEntity}">
+<!--<form th:method="DELETE" th:action="@{/trains/{id}(id=${trainEntity.getId()})}" th:object="${trainEntity}">-->
+    <h1>Are you sure you want to delete This train?</h1>
+    <p th:text="${trainEntity.getId()}">VALUE</p>
+    <input type="hidden" th:field="*{id}" id="id"  >
+    <p th:text="${trainEntity.getName()}">VALUE</p>
+    <input type="hidden" th:field="*{name}" id="name"  >
+    <p th:text="${trainEntity.getCapacity()}">VALUE</p>
+    <input type="hidden" th:field="*{capacity}" id="capacity" >
+    <p>
+        <input class="btn btn-danger" type="submit" value="Delete anyways"/>
+    </p>
+</form>
+</body>
+</html>
