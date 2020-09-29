@@ -8,12 +8,13 @@
 </head>
 <body>
 <form th:method="post" th:action="@{/trains/delete}" th:object="${trainEntity}">
-<!--<form th:method="DELETE" th:action="@{/trains/{id}(id=${trainEntity.getId()})}" th:object="${trainEntity}">-->
     <h1>Are you sure you want to delete This train?</h1>
     <p th:text="${trainEntity.getId()}">VALUE</p>
     <input type="hidden" th:field="*{id}" id="id"  >
-    <p th:text="${trainEntity.getName()}">VALUE</p>
-    <input type="hidden" th:field="*{name}" id="name"  >
+    <p th:text="${trainEntity.getNumber()}">VALUE</p>
+    <input type="hidden" th:field="*{number}" id="number"  >
+    <p th:text="${trainEntity.getType()}">VALUE</p>
+    <input type="hidden" th:field="*{type}" id="type"  >
     <p th:text="${trainEntity.getCapacity()}">VALUE</p>
     <input type="hidden" th:field="*{capacity}" id="capacity" >
     <p>

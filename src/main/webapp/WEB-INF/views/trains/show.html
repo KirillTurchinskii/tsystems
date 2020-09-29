@@ -7,7 +7,8 @@
 </head>
 <body>
 <p th:text="${trainEntity.getId()}">VALUE</p>
-<p th:text="${trainEntity.getName()}">VALUE</p>
+<p th:text="${trainEntity.getNumber()}">VALUE</p>
+<p th:text="${trainEntity.getType()}">VALUE</p>
 <p th:text="${trainEntity.getCapacity()}">VALUE</p>
 <p> <a class="btn btn-primary" th:href="@{/trains/{id}/update(id=${trainEntity.getId()})}" role="button">Update train</a>
     <a class="btn btn-danger" th:href="@{/trains/{id}/delete(id=${trainEntity.getId()})}" role="button">Delete Train</a>

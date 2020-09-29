@@ -14,13 +14,24 @@
     <p th:text="${trainEntity.getId()}">VALUE</p>
 <!--    <p th:text="${trainEntity.getName()}">VALUE</p>-->
     <p>
-        <label for="name">Change Name</label>
-        <input type="text" th:field="*{name}" id="name" th:placeholder="*{name}">
+        <label for="number">Change Number</label>
+        <input type="text" th:field="*{number}" id="number" th:placeholder="*{number}">
     </p>
 <!--    <p th:text="${trainEntity.getCapacity()}">VALUE</p>-->
+
+    <p>
+        <label for="type">Change Type </label>
+        <select name="type" id="type">
+            <option th:each="typeOption : ${T(com.turchinsky.enums.TrainType).values()}"
+                    th:value="${typeOption.getType()}" th:text="${typeOption.getType()}"
+            th:selected="${typeOption.getType().equals(trainEntity.getType())}">
+            </option>
+        </select>
+    </p>
+
     <p>
         <label for="capacity">Change Capacity</label>
-        <input type="number" min="0" th:field="*{capacity}" id="capacity" th:placeholder="*{capacity}">
+        <input type="number" min="0" th:field="*{capacity}" id="capacity" th:placeholder="*{getCapacity()}">
     </p>
     <p>
         <input type="submit" value="Update Train">

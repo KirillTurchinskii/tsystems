@@ -10,8 +10,16 @@
 
 <form th:method="POST" th:action="@{/trains}" th:object="${train}">
     <p>
-        <label for="name">Input Name</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Name">
+        <label for="number">Input Number</label>
+        <input type="text" th:field="*{number}" id="number" placeholder="Number">
+    </p>
+    <p>
+        <label for="type">Input Type</label>
+        <select name="type" id="type">
+            <option th:each="typeOption : ${T(com.turchinsky.enums.TrainType).values()}"
+                    th:value="${typeOption.getType()}" th:text="${typeOption.getType()}"></option>
+        </select>
+
     </p>
     <p>
         <label for="capacity">Input Capacity</label>

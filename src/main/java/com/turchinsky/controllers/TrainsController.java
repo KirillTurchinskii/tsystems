@@ -19,18 +19,12 @@ public class TrainsController {
 
     @GetMapping
     public String index(Model model) {
-//        for (TrainEntity trainEntity : trainsService.getAllTrains()) {
-//            System.out.println(trainEntity);
-//        }
         model.addAttribute("trainEntities", trainsService.getAllTrains());
         return "trains/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-//        TrainEntity entity = trainsService.getTrainEntity(id);
-//        System.out.println("???");
-//        System.out.println(entity);
         model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/show";
     }
@@ -43,7 +37,7 @@ public class TrainsController {
 
     @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
-        if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
+        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
             return "redirect:/trains";
         } else {
@@ -59,7 +53,7 @@ public class TrainsController {
 
     @PostMapping("/{id}")
         public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
-        if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
+        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
             return "redirect:/trains/" + trainEntity.getId();
         } else {
