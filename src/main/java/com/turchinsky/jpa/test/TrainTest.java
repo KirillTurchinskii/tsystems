@@ -2,19 +2,14 @@
 //
 //import com.turchinsky.dao.TrainsDao;
 //import com.turchinsky.entities.TrainEntity;
+//import com.turchinsky.enums.TrainType;
 //
 //public class TrainTest {
 //
 //    public static void main(String[] args) {
-////        TrainsService trainsService = new TrainsService();
-////        for (TrainEntity train : trainsService.getAllTrains()) {
-////            System.out.println(train);
-////        }
-//
-//        TrainsDao trainsDao = new TrainsDao();
-//        for (TrainEntity trainEntity :
-//                trainsDao.getAll()) {
-//            System.out.println(trainEntity);
+//        for (TrainType s :
+//                TrainType.values()) {
+//            s.getType().equals(trainEntity.getType())
 //        }
 //    }
 //}

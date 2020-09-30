@@ -4,7 +4,7 @@ package com.turchinsky.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "trains")
+@Table(name = "train")
 public class TrainEntity {
 
     @Id
@@ -12,13 +12,24 @@ public class TrainEntity {
     private int id;
 
     @Column
-    private String name;
+    private String number;
+
+    @Column
+    private String type;
 
     @Column
     private int capacity;
 
-    public TrainEntity(String name, int capacity) {
-        this.name = name;
+    @Column
+    private int velocity;
+
+//    @ManyToMany
+//    @JoinTable(joinColumns = @JoinColumn(name = "train_id"),
+//    inverseJoinColumns = @JoinColumn(name = "station_id"))
+//    private List<Station> station = new ArrayList<>();
+
+    public TrainEntity(String type, int capacity) {
+        this.type = type;
         this.capacity = capacity;
     }
 
@@ -34,13 +45,20 @@ public class TrainEntity {
         return id;
     }
 
-
-    public String getName() {
-        return name;
+    public String getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String name) {
+        this.type = name;
     }
 
     public int getCapacity() {
@@ -51,12 +69,23 @@ public class TrainEntity {
         this.capacity = capacity;
     }
 
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
+
     @Override
     public String toString() {
         return "TrainEntity{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", type='" + type + '\'' +
                 ", capacity=" + capacity +
+                ", velocity=" + velocity +
                 '}';
     }
 

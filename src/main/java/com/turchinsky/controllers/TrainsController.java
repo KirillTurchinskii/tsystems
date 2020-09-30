@@ -19,18 +19,12 @@ public class TrainsController {
 
     @GetMapping
     public String index(Model model) {
-//        for (TrainEntity trainEntity : trainsService.getAllTrains()) {
-//            System.out.println(trainEntity);
-//        }
         model.addAttribute("trainEntities", trainsService.getAllTrains());
         return "trains/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-//        TrainEntity entity = trainsService.getTrainEntity(id);
-//        System.out.println("???");
-//        System.out.println(entity);
         model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/show";
     }
@@ -41,15 +35,42 @@ public class TrainsController {
         return "trains/new-train";
     }
 
-    @PostMapping
+    @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
-        if (trainEntity.getName() != null && trainEntity.getCapacity() != 0) {
+        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
-            /// TODO: 9/18/2020 Let TrainsService decide what input is valid and return int
             return "redirect:/trains";
         } else {
             return "redirect:/trains/new-train";
         }
+    }
+
+    @GetMapping("/{id}/update")
+    public String changeTrain(@PathVariable("id") int id, Model model) {
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        return "trains/update-train";
+    }
+
+    @PostMapping("/{id}")
+        public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
+        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
+            trainsService.save(trainEntity);
+            return "redirect:/trains/" + trainEntity.getId();
+        } else {
+            return "redirect:/trains/"+trainEntity.getId()+"/update";
+        }
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteTrain(@PathVariable("id")int id, Model model){
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        return "trains/delete-alert";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
+        trainsService.deleteTrain(trainEntity);
+        return "redirect:/trains";
     }
 
 }

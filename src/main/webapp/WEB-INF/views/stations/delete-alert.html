@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Station</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+
+</head>
+<body>
+<form th:action="@{/stations/delete}" th:method="post" th:object="${stationEntity}">
+    <h1>Are you sure you want to delete This station?</h1>
+    <p th:text="${stationEntity.getId()}">VALUE</p>
+    <input id="id" th:field="*{id}" type="hidden">
+    <p th:text="${stationEntity.getName()}">VALUE</p>
+    <input id="name" th:field="*{name}" type="hidden">
+    <p>
+        <input class="btn btn-danger" type="submit" value="Delete anyways"/>
+    </p>
+</form>
+</body>
+</html>
