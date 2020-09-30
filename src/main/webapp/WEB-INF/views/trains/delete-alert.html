@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Delete Train</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
 
 </head>
 <body>
 <form th:method="post" th:action="@{/trains/delete}" th:object="${trainEntity}">
     <h1>Are you sure you want to delete This train?</h1>
     <p th:text="${trainEntity.getId()}">VALUE</p>
-    <input type="hidden" th:field="*{id}" id="id"  >
+    <input id="id" th:field="*{id}" type="hidden">
     <p th:text="${trainEntity.getNumber()}">VALUE</p>
-    <input type="hidden" th:field="*{number}" id="number"  >
+    <input id="number" th:field="*{number}" type="hidden">
     <p th:text="${trainEntity.getType()}">VALUE</p>
-    <input type="hidden" th:field="*{type}" id="type"  >
+    <input id="type" th:field="*{type}" type="hidden">
     <p th:text="${trainEntity.getCapacity()}">VALUE</p>
-    <input type="hidden" th:field="*{capacity}" id="capacity" >
+    <input id="capacity" th:field="*{capacity}" type="hidden">
+    <p th:text="${trainEntity.getCapacity()}">VALUE</p>
+    <input id="velocity" th:field="*{capacity}" type="hidden">
     <p>
         <input class="btn btn-danger" type="submit" value="Delete anyways"/>
     </p>

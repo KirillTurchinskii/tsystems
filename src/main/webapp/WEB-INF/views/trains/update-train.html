@@ -24,7 +24,7 @@
         <select name="type" id="type">
             <option th:each="typeOption : ${T(com.turchinsky.enums.TrainType).values()}"
                     th:value="${typeOption.getType()}" th:text="${typeOption.getType()}"
-            th:selected="${typeOption.getType().equals(trainEntity.getType())}">
+                    th:selected="${typeOption.getType().equals(trainEntity.getType())}">
             </option>
         </select>
     </p>
@@ -32,6 +32,10 @@
     <p>
         <label for="capacity">Change Capacity</label>
         <input type="number" min="0" th:field="*{capacity}" id="capacity" th:placeholder="*{getCapacity()}">
+    </p>
+    <p>
+        <label for="velocity">Change Velocity</label>
+        <input id="velocity" min="0" th:field="*{velocity}" th:placeholder="*{getVelocity()}" type="number">
     </p>
     <p>
         <input type="submit" value="Update Train">

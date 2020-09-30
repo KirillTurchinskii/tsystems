@@ -1,64 +1,54 @@
-create table test
+create table if not exists train
 (
-    id     serial not null
-        constraint test_pkey
-            primary key,
-    text   varchar(255),
-    number integer
+    id       serial not null,
+    capacity integer,
+    type     varchar(40),
+    number   varchar(40),
+    velocity integer,
+    constraint trains_pkey
+        primary key (id),
+    constraint trains_number_key
+        unique (number)
 );
 
-alter table test
+alter table train
     owner to postgres;
 
-create table trains
+create table if not exists passenger
 (
-    id       serial not null
-        constraint trains_pkey
-            primary key,
-    name     varchar(40),
-    capacity integer
+    id         serial      not null,
+    name       varchar(40),
+    surname    varchar(40),
+    birth_date date,
+    username   varchar(40) not null,
+    email      varchar(50),
+    constraint passengers_pkey
+        primary key (id),
+    constraint passenger_username_key
+        unique (username),
+    constraint passenger_email_key
+        unique (email)
 );
 
-alter table trains
+alter table passenger
     owner to postgres;
 
-create table schedule
+create table if not exists schedule
 (
-    id       integer not null
-        constraint schedule_pkey
-            primary key
-        constraint schedule_id_key
-            unique,
-    train_id integer
-        constraint schedule_train_id_fkey
-            references trains,
-    time     timestamp
 );
 
 alter table schedule
     owner to postgres;
 
-create table passengers
+create table if not exists test
 (
-    id         serial not null
-        constraint passengers_pkey
-            primary key,
-    name       varchar(40),
-    surname    varchar(40),
-    birth_date date
 );
 
-alter table passengers
+alter table test
     owner to postgres;
 
-create table tickets
+create table if not exists tickets
 (
-    id           serial not null
-        constraint tickets_pkey
-            primary key,
-    passenger_id integer
-        constraint tickets_passenger_id_fkey
-            references passengers
 );
 
 alter table tickets

@@ -20,6 +20,9 @@ public class TrainEntity {
     @Column
     private int capacity;
 
+    @Column
+    private int velocity;
+
 //    @ManyToMany
 //    @JoinTable(joinColumns = @JoinColumn(name = "train_id"),
 //    inverseJoinColumns = @JoinColumn(name = "station_id"))
@@ -66,13 +69,24 @@ public class TrainEntity {
         this.capacity = capacity;
     }
 
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
+    }
+
     @Override
     public String toString() {
         return "TrainEntity{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
-                ", trainType='" + type + '\'' +
+                ", type='" + type + '\'' +
                 ", capacity=" + capacity +
+                ", velocity=" + velocity +
                 '}';
     }
+
 }
