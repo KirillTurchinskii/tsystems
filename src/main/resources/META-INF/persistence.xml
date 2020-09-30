@@ -6,6 +6,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.turchinsky.entities.TrainEntity</class>
         <class>com.turchinsky.entities.StationEntity</class>
+        <class>com.turchinsky.entities.RouteEntity</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
