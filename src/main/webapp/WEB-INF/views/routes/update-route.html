@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Update Station</title>
+    <title>Update Route</title>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
 
@@ -10,14 +10,14 @@
 <body>
 
 
-<form th:action="@{/stations/{id}(id=${stationEntity.getId()})}" th:method="POST" th:object="${stationEntity}">
-    <p th:text="${stationEntity.getId()}">VALUE</p>
+<form th:action="@{/routes/{id}(id=${routeEntity.getId()})}" th:method="POST" th:object="${routeEntity}">
+    <p th:text="${routeEntity.getId()}">VALUE</p>
     <p>
         <label for="name">Change Name</label>
         <input id="name" th:field="*{name}" th:placeholder="*{name}" type="text">
     </p>
     <p>
-        <input type="submit" value="Update Station">
+        <input type="submit" value="Update Route">
 
     </p>
 </form>
