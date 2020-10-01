@@ -37,7 +37,8 @@ public class TrainsController {
 
     @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
-        if (trainEntity.getNumber() != null && !trainEntity.getNumber().equals("") && trainEntity.getCapacity() != 0) {
+        if (trainEntity.getNumber() != null && !trainEntity.getNumber().equals("") && trainEntity
+                .getCapacity() != 0 && trainsService.checkNumberIdentity(trainEntity.getNumber())) {
             trainsService.save(trainEntity);
             return "redirect:/trains";
         } else {
@@ -52,17 +53,18 @@ public class TrainsController {
     }
 
     @PostMapping("/{id}")
-        public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
-        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
+    public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
+        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0 && trainsService
+                .checkNumberIdentity(trainEntity.getNumber())) {
             trainsService.save(trainEntity);
             return "redirect:/trains/" + trainEntity.getId();
         } else {
-            return "redirect:/trains/"+trainEntity.getId()+"/update";
+            return "redirect:/trains/" + trainEntity.getId() + "/update";
         }
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteTrain(@PathVariable("id")int id, Model model){
+    public String deleteTrain(@PathVariable("id") int id, Model model) {
         model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/delete-alert";
     }

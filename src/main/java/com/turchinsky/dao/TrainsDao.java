@@ -30,6 +30,11 @@ public class TrainsDao implements Dao<TrainEntity> {
         return entityManager.find(TrainEntity.class, id);
     }
 
+    public List<TrainEntity> getByNumber(String number) {
+        Query query = entityManager.createQuery("SELECT e FROM TrainEntity e where e.number=" + "'" + number + "'");
+        return query.getResultList();
+    }
+
     @Override
     public List<TrainEntity> getAll() {
         Query query = entityManager.createQuery("SELECT e FROM TrainEntity e");

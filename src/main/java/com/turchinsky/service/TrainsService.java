@@ -34,4 +34,9 @@ public class TrainsService {
         return trainsDao.get(id);
     }
 
+    public boolean checkNumberIdentity(String number) {
+        List<TrainEntity> byNumber = trainsDao.getByNumber(number);
+        return byNumber.size() == 0;
+    }
+
 }
