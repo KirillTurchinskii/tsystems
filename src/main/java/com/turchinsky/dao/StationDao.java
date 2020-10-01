@@ -28,6 +28,11 @@ public class StationDao implements Dao<StationEntity> {
         return entityManager.find(StationEntity.class, id);
     }
 
+    public List<StationEntity> getByName(String name) {
+        Query query = entityManager.createQuery("SELECT e FROM StationEntity e where e.name=" + "'" + name + "'");
+        return query.getResultList();
+    }
+
     @Override
     public List<StationEntity> getAll() {
         Query query = entityManager.createQuery("SELECT e FROM StationEntity e");

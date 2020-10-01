@@ -32,5 +32,10 @@ public class RouteService {
         return routeDao.get(id);
     }
 
+    public boolean checkNameIdentity(String name) {
+        List<RouteEntity> byName = routeDao.getByName(name);
+        return byName.size() == 0;
+    }
+
 
 }

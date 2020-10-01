@@ -37,7 +37,8 @@ public class RouteController {
 
     @PostMapping()
     public String create(@ModelAttribute("route") RouteEntity routeEntity) {
-        if (routeEntity.getName() != null && !routeEntity.getName().equals("")) {
+        if (routeEntity.getName() != null && !routeEntity.getName().equals("") && routeService
+                .checkNameIdentity(routeEntity.getName())) {
             routeService.save(routeEntity);
             return "redirect:/routes";
         } else {
@@ -53,7 +54,8 @@ public class RouteController {
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("routeEntity") RouteEntity routeEntity) {
-        if (routeEntity.getName() != null && !routeEntity.getName().equals("")) {
+        if (routeEntity.getName() != null && !routeEntity.getName().equals("") && routeService
+                .checkNameIdentity(routeEntity.getName())) {
             routeService.save(routeEntity);
             return "redirect:/routes/" + routeEntity.getId();
         } else {

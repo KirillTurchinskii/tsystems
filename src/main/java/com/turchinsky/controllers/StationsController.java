@@ -37,7 +37,8 @@ public class StationsController {
 
     @PostMapping()
     public String create(@ModelAttribute("station") StationEntity stationEntity) {
-        if (stationEntity.getName() != null && !stationEntity.getName().equals("")) {
+        if (stationEntity.getName() != null && !stationEntity.getName().equals("") && stationService
+                .checkNameIdentity(stationEntity.getName())) {
             stationService.save(stationEntity);
             return "redirect:/stations";
         } else {
@@ -53,7 +54,8 @@ public class StationsController {
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("stationEntity") StationEntity stationEntity) {
-        if (stationEntity.getName() != null && !stationEntity.getName().equals("")) {
+        if (stationEntity.getName() != null && !stationEntity.getName().equals("") && stationService
+                .checkNameIdentity(stationEntity.getName())) {
             stationService.save(stationEntity);
             return "redirect:/stations/" + stationEntity.getId();
         } else {

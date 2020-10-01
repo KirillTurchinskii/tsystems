@@ -33,4 +33,10 @@ public class StationService {
         return stationDao.get(id);
     }
 
+
+    public boolean checkNameIdentity(String name) {
+        List<StationEntity> byName = stationDao.getByName(name);
+        return byName.size() == 0;
+    }
+
 }

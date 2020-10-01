@@ -28,6 +28,11 @@ public class RouteDao implements Dao<RouteEntity> {
         return entityManager.find(RouteEntity.class, id);
     }
 
+    public List<RouteEntity> getByName(String name) {
+        Query query = entityManager.createQuery("SELECT e FROM RouteEntity e where e.name=" + "'" + name + "'");
+        return query.getResultList();
+    }
+
     @Override
     public List<RouteEntity> getAll() {
         Query query = entityManager.createQuery("SELECT e FROM RouteEntity e");
