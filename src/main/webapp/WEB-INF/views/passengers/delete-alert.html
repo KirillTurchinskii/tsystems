@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Passenger</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+
+</head>
+<body>
+<form th:action="@{/passengers/delete}" th:method="post" th:object="${passengerEntity}">
+    <h1>Are you sure you want to delete This passenger?</h1>
+    <p th:text="${passengerEntity.getId()}">VALUE</p>
+    <input id="id" th:field="*{id}" type="hidden">
+    <p th:text="${passengerEntity.getName()}">VALUE</p>
+    <input id="name" th:field="*{name}" type="hidden">
+    <p th:text="${passengerEntity.getSurname()}">VALUE</p>
+    <input id="surname" th:field="*{surname}" type="hidden">
+    <p th:text="${passengerEntity.getUsername()}">VALUE</p>
+    <input id="username" th:field="*{username}" type="hidden">
+    <p th:text="${passengerEntity.getEmail()}">VALUE</p>
+    <input id="email" th:field="*{email}" type="hidden">
+    <p th:text="${passengerEntity.getBirthDate()}">VALUE</p>
+    <input id="birthDate" th:field="*{birthDate}" type="hidden">
+    <p>
+        <input class="btn btn-danger" type="submit" value="Delete anyways"/>
+    </p>
+</form>
+</body>
+</html>

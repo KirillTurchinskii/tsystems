@@ -10,16 +10,22 @@ public class TrainEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+//    @Column(name = "id", nullable = false, insertable = false, updatable = false)
 
+
+    @Basic
     @Column
     private String number;
 
+    @Basic
     @Column
     private String type;
 
+    @Basic
     @Column
     private int capacity;
 
+    @Basic
     @Column
     private int velocity;
 

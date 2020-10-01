@@ -11,6 +11,7 @@ public class RouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Basic
     @Column
     private String name;
 

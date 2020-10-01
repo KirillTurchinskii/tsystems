@@ -10,5 +10,10 @@
 <p>
     Go to <a href="/routes">Routes</a>
 </p>
+
+<p>
+    Go to <a href="/passengers">Passengers</a>
+</p>
+
 </body>
 </html>

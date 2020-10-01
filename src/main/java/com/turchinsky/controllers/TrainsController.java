@@ -37,7 +37,7 @@ public class TrainsController {
 
     @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
-        if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0) {
+        if (trainEntity.getNumber() != null && !trainEntity.getNumber().equals("") && trainEntity.getCapacity() != 0) {
             trainsService.save(trainEntity);
             return "redirect:/trains";
         } else {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Passenger</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+</head>
+<body>
+<p th:text="${passengerEntity.getId()}">VALUE</p>
+<p th:text="${passengerEntity.getName()}">VALUE</p>
+<p th:text="${passengerEntity.getSurname()}">VALUE</p>
+<p th:text="${passengerEntity.getBirthDate()}">VALUE</p>
+<p th:text="${passengerEntity.getUsername()}">VALUE</p>
+<p th:text="${passengerEntity.getEmail()}">VALUE</p>
+<p><a class="btn btn-primary" role="button" th:href="@{/passengers/{id}/update(id=${passengerEntity.getId()})}">Update
+    passenger</a>
+    <a class="btn btn-danger" role="button" th:href="@{/passengers/{id}/delete(id=${passengerEntity.getId()})}">Delete
+        passenger</a>
+</p>
+
+</body>
+</html>
