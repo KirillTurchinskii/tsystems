@@ -15,7 +15,7 @@
 <!--    <p th:text="${trainEntity.getName()}">VALUE</p>-->
     <p>
         <label for="number">Change Number</label>
-        <input id="number" minlength="1" th:field="*{number}" th:placeholder="*{number}" type="text">
+        <input id="number" pattern=".{1,}" required th:field="*{number}" th:placeholder="*{number}" type="text">
     </p>
 <!--    <p th:text="${trainEntity.getCapacity()}">VALUE</p>-->
 

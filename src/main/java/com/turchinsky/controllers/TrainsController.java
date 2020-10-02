@@ -38,7 +38,7 @@ public class TrainsController {
     @PostMapping()
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
         if (trainEntity.getNumber() != null && !trainEntity.getNumber().equals("") && trainEntity
-                .getCapacity() != 0 && trainsService.checkNumberIdentity(trainEntity.getNumber())) {
+                .getCapacity() != 0 && trainsService.checkNumberIdentity(trainEntity.getNumber(), trainEntity)) {
             trainsService.save(trainEntity);
             return "redirect:/trains";
         } else {
@@ -55,7 +55,7 @@ public class TrainsController {
     @PostMapping("/{id}")
     public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
         if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0 && trainsService
-                .checkNumberIdentity(trainEntity.getNumber())) {
+                .checkNumberIdentity(trainEntity.getNumber(), trainEntity)) {
             trainsService.save(trainEntity);
             return "redirect:/trains/" + trainEntity.getId();
         } else {

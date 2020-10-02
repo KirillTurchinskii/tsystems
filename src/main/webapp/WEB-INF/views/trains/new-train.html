@@ -11,7 +11,7 @@
 <form th:method="POST" th:action="@{/trains}" th:object="${train}">
     <p>
         <label for="number">Input Number</label>
-        <input id="number" minlength="1" placeholder="Number" th:field="*{number}" type="text">
+        <input id="number" pattern=".{1,}" placeholder="Number" required th:field="*{number}" type="text">
     </p>
     <p>
         <label for="type">Input Type</label>
