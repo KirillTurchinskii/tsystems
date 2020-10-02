@@ -10,8 +10,6 @@ public class TrainEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(name = "id", nullable = false, insertable = false, updatable = false)
-
 
     @Basic
     @Column
@@ -29,18 +27,12 @@ public class TrainEntity {
     @Column
     private int velocity;
 
-//    @ManyToMany
-//    @JoinTable(joinColumns = @JoinColumn(name = "train_id"),
-//    inverseJoinColumns = @JoinColumn(name = "station_id"))
-//    private List<Station> station = new ArrayList<>();
-
-    public TrainEntity(String type, int capacity) {
-        this.type = type;
-        this.capacity = capacity;
-    }
-
-    public TrainEntity() {
-    }
+//    @OneToMany(mappedBy = "refTrainEntity")
+//    private List<ScheduleDetailsEntity> refScheduleDetailsEntities;
+//
+//    @OneToMany(mappedBy = "refTrainEntity")
+//    private List<TrainHasScheduleAndRouteEntity> refTrainHasScheduleAndRouteEntities;
+//
 
     public void setId(int id) {
         this.id = id;
@@ -83,6 +75,24 @@ public class TrainEntity {
     public void setVelocity(int velocity) {
         this.velocity = velocity;
     }
+
+//    public List<ScheduleDetailsEntity> getRefScheduleDetailsEntities() {
+//        return refScheduleDetailsEntities;
+//    }
+//
+//    public void setRefScheduleDetailsEntities(
+//            List<ScheduleDetailsEntity> refScheduleDetailsEntities) {
+//        this.refScheduleDetailsEntities = refScheduleDetailsEntities;
+//    }
+//
+//    public List<TrainHasScheduleAndRouteEntity> getRefTrainHasScheduleAndRouteEntities() {
+//        return refTrainHasScheduleAndRouteEntities;
+//    }
+//
+//    public void setRefTrainHasScheduleAndRouteEntities(
+//            List<TrainHasScheduleAndRouteEntity> refTrainHasScheduleAndRouteEntities) {
+//        this.refTrainHasScheduleAndRouteEntities = refTrainHasScheduleAndRouteEntities;
+//    }
 
     @Override
     public String toString() {

@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,8 +21,6 @@ public class TrainsDao implements Dao<TrainEntity> {
     }
 
     private final EntityManager entityManager = emFactoryObj.createEntityManager();
-
-    private final List<TrainEntity> trainsList = new ArrayList<>();
 
     @Override
     public TrainEntity get(int id) {

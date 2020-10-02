@@ -1,4 +1,4 @@
-package com.turchinsky.dao;
-
-public class ScheduleDao {
-}
+//package com.turchinsky.dao;
+//
+//public class ScheduleDao {
+//}

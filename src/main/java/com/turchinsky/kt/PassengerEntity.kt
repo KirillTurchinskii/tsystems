@@ -30,7 +30,7 @@
 //    var email: String? = null
 //
 //    @get:OneToMany(mappedBy = "refPassengerEntity")
-//    var refPassengerHasTicketEntities: List<PassengerHasTicketEntity>? = null
+//    var refTicketEntities: List<TicketEntity>? = null
 //
 //    override fun toString(): String =
 //            "Entity of type: ${javaClass.name} ( " +

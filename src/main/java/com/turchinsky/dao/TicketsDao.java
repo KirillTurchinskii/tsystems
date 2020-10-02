@@ -1,4 +1,4 @@
-package com.turchinsky.dao;
-
-public class TicketsDao {
-}
+//package com.turchinsky.dao;
+//
+//public class TicketsDao {
+//}

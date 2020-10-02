@@ -8,6 +8,8 @@
         <class>com.turchinsky.entities.StationEntity</class>
         <class>com.turchinsky.entities.RouteEntity</class>
         <class>com.turchinsky.entities.PassengerEntity</class>
+        <class>com.turchinsky.entities.RouteDetailsEntity</class>
+        <class>com.turchinsky.entities.RouteDetailsEntityPK</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
