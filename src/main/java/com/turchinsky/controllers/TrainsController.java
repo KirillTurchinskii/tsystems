@@ -19,13 +19,13 @@ public class TrainsController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("trainEntities", trainsService.getAllTrains());
+        model.addAttribute("trainEntities", trainsService.getAll());
         return "trains/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        model.addAttribute("trainEntity", trainsService.get(id));
         return "trains/show";
     }
 
@@ -48,7 +48,7 @@ public class TrainsController {
 
     @GetMapping("/{id}/update")
     public String changeTrain(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        model.addAttribute("trainEntity", trainsService.get(id));
         return "trains/update-train";
     }
 
@@ -65,13 +65,13 @@ public class TrainsController {
 
     @GetMapping("/{id}/delete")
     public String deleteTrain(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
+        model.addAttribute("trainEntity", trainsService.get(id));
         return "trains/delete-alert";
     }
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
-        trainsService.deleteTrain(trainEntity);
+        trainsService.delete(trainEntity);
         return "redirect:/trains";
     }
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PassengerService {
+public class PassengerService implements DefaultCRUDService<PassengerEntity> {
 
     private final PassengersDao passengersDao;
 
@@ -15,20 +15,24 @@ public class PassengerService {
         this.passengersDao = passengersDao;
     }
 
-    public List<PassengerEntity> getAllPassengers() {
+    @Override
+    public List<PassengerEntity> getAll() {
         return passengersDao.getAll();
     }
 
-    public PassengerEntity getPassengerEntity(int id) {
+    @Override
+    public PassengerEntity get(int id) {
         return passengersDao.get(id);
     }
 
+    @Override
     public PassengerEntity save(PassengerEntity passengerEntity) {
         return passengersDao.save(passengerEntity);
     }
 
-    public void deletePassenger(PassengerEntity passengerEntity) {
-        PassengerEntity managedEntity = getPassengerEntity(passengerEntity.getId());
+    @Override
+    public void delete(PassengerEntity passengerEntity) {
+        PassengerEntity managedEntity = get(passengerEntity.getId());
         passengersDao.delete(managedEntity);
     }
 

@@ -19,13 +19,13 @@ public class RouteController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("routeEntities", routeService.getAllRoutes());
+        model.addAttribute("routeEntities", routeService.getAll());
         return "routes/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.getRouteEntity(id));
+        model.addAttribute("routeEntity", routeService.get(id));
         return "routes/show";
     }
 
@@ -48,7 +48,7 @@ public class RouteController {
 
     @GetMapping("/{id}/update")
     public String changeRoute(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.getRouteEntity(id));
+        model.addAttribute("routeEntity", routeService.get(id));
         return "routes/update-route";
     }
 
@@ -65,13 +65,13 @@ public class RouteController {
 
     @GetMapping("/{id}/delete")
     public String deleteRoute(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.getRouteEntity(id));
+        model.addAttribute("routeEntity", routeService.get(id));
         return "routes/delete-alert";
     }
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("routeEntity") RouteEntity routeEntity) {
-        routeService.deleteRoute(routeEntity);
+        routeService.delete(routeEntity);
         return "redirect:/routes";
     }
 

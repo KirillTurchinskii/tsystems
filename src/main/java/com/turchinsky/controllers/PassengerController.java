@@ -18,13 +18,13 @@ public class PassengerController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("passengerEntities", passengerService.getAllPassengers());
+        model.addAttribute("passengerEntities", passengerService.getAll());
         return "passengers/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("passengerEntity", passengerService.getPassengerEntity(id));
+        model.addAttribute("passengerEntity", passengerService.get(id));
         return "passengers/show";
     }
 
@@ -48,7 +48,7 @@ public class PassengerController {
 
     @GetMapping("/{id}/update")
     public String changePassenger(@PathVariable("id") int id, Model model) {
-        model.addAttribute("passengerEntity", passengerService.getPassengerEntity(id));
+        model.addAttribute("passengerEntity", passengerService.get(id));
         return "passengers/update-passenger";
     }
 
@@ -66,12 +66,12 @@ public class PassengerController {
 
     @GetMapping("/{id}/delete")
     public String deletePassenger(@PathVariable("id") int id, Model model) {
-        model.addAttribute("passengerEntity", passengerService.getPassengerEntity(id));
+        model.addAttribute("passengerEntity", passengerService.get(id));
         return "passengers/delete-alert";
     }
 
     public String delete(@ModelAttribute("passengerEntity") PassengerEntity passengerEntity) {
-        passengerService.deletePassenger(passengerEntity);
+        passengerService.delete(passengerEntity);
         return "redirect:/passengers";
     }
 

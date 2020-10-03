@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Service
-public class TrainsService {
+public class TrainsService implements DefaultCRUDService<TrainEntity> {
 
     private final TrainsDao trainsDao;
 
@@ -16,27 +16,30 @@ public class TrainsService {
         this.trainsDao = trainsDao;
     }
 
+    public boolean checkNumberIdentity(String number, TrainEntity trainEntity) {
+        List<TrainEntity> byNumber = trainsDao.getByNumber(number);
+        return (byNumber.size() == 0 || (byNumber.size() == 1 && byNumber.get(0).getId() == trainEntity.getId()));
+    }
 
-    public List<TrainEntity> getAllTrains() {
+    @Override
+    public List<TrainEntity> getAll() {
         return trainsDao.getAll();
     }
 
+    @Override
     public TrainEntity save(TrainEntity trainEntity) {
         return trainsDao.save(trainEntity);
     }
 
-    public void deleteTrain(TrainEntity trainEntity) {
-        TrainEntity managedEntity = getTrainEntity(trainEntity.getId());
+    @Override
+    public void delete(TrainEntity trainEntity) {
+        TrainEntity managedEntity = get(trainEntity.getId());
         trainsDao.delete(managedEntity);
     }
 
-    public TrainEntity getTrainEntity(int id) {
+    @Override
+    public TrainEntity get(int id) {
         return trainsDao.get(id);
-    }
-
-    public boolean checkNumberIdentity(String number, TrainEntity trainEntity) {
-        List<TrainEntity> byNumber = trainsDao.getByNumber(number);
-        return (byNumber.size() == 0 || (byNumber.size() == 1 && byNumber.get(0).getId() == trainEntity.getId()));
     }
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StationService {
+public class StationService implements DefaultCRUDService<StationEntity> {
 
     private final StationDao stationDao;
 
@@ -16,27 +16,30 @@ public class StationService {
         this.stationDao = stationDao;
     }
 
-    public List<StationEntity> getAllStations() {
+    public boolean checkNameIdentity(String name) {
+        List<StationEntity> byName = stationDao.getByName(name);
+        return byName.size() == 0;
+    }
+
+    @Override
+    public List<StationEntity> getAll() {
         return stationDao.getAll();
     }
 
+    @Override
     public StationEntity save(StationEntity stationEntity) {
         return stationDao.save(stationEntity);
     }
 
-    public void deleteStation(StationEntity stationEntity) {
-        StationEntity managedEntity = getStationEntity(stationEntity.getId());
+    @Override
+    public void delete(StationEntity stationEntity) {
+        StationEntity managedEntity = get(stationEntity.getId());
         stationDao.delete(managedEntity);
     }
 
-    public StationEntity getStationEntity(int id) {
+    @Override
+    public StationEntity get(int id) {
         return stationDao.get(id);
-    }
-
-
-    public boolean checkNameIdentity(String name) {
-        List<StationEntity> byName = stationDao.getByName(name);
-        return byName.size() == 0;
     }
 
 }
