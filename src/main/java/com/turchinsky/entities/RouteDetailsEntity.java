@@ -2,8 +2,6 @@ package com.turchinsky.entities;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "route_details")
@@ -121,38 +119,3 @@ public class RouteDetailsEntity {
 }
 
 
-class RouteDetailsEntityPK implements Serializable {
-
-    @Id
-    @Column(name = "route_id", nullable = false, insertable = false, updatable = false)
-    int routeId;
-
-    @Id
-    @Column(name = "station_id", nullable = false, insertable = false, updatable = false)
-    int stationId;
-
-    @Id
-    @Column(name = "station_order", nullable = false, insertable = false, updatable = false)
-    int stationOrder;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        RouteDetailsEntityPK that = (RouteDetailsEntityPK) o;
-        return routeId == that.routeId &&
-                stationId == that.stationId &&
-                stationOrder == that.stationOrder;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(routeId, stationId, stationOrder);
-    }
-
-}
