@@ -10,6 +10,9 @@
 <div th:each="routeEntity : ${routeEntities}">
     <a th:href="@{/routes/{id}(id=${routeEntity.getId()})}"
        th:text="${routeEntity.getName()}">Name</a>
+    <a class="btn btn-primary" role="button"
+       th:href="@{/route-details/{routeId}/update(routeId=${routeEntity.getId()})}">Update
+        Route Details</a>
 </div>
 </body>
 </html>

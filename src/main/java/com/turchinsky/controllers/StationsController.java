@@ -29,6 +29,12 @@ public class StationsController {
         return "stations/show";
     }
 
+    @GetMapping("/test")
+    public String newTestStation(Model model) {
+        model.addAttribute("station", new StationEntity());
+        return "stations/testingJS";
+    }
+
     @GetMapping("/new-station")
     public String newStation(Model model) {
         model.addAttribute("station", new StationEntity());

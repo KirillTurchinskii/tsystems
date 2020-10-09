@@ -10,7 +10,12 @@
 <p th:text="${routeEntity.getId()}">VALUE</p>
 <p th:text="${routeEntity.getName()}">VALUE</p>
 <p><a class="btn btn-primary" role="button" th:href="@{/routes/{id}/update(id=${routeEntity.getId()})}">Update
-    Route</a>
+    Route Name</a>
+    <a class="btn btn-primary" role="button"
+       th:href="@{/route-details/{routeId}/update(routeId=${routeEntity.getId()})}">Update
+        Route Details</a>
+</p>
+<p>
     <a class="btn btn-danger" role="button" th:href="@{/routes/{id}/delete(id=${routeEntity.getId()})}">Delete
         Route</a>
 </p>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Trains</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+</head>
+<body>
+<div class="routeDetailsIndex" th:each="routeDetailsEntity : ${routeDetailsEntities}">
+    <a th:href="@{/route-details/{routeId}/{stationId}/{stationOrder}(routeId=${routeDetailsEntity.getRouteId()}, stationId=${routeDetailsEntity.getStationId()}, stationOrder=${routeDetailsEntity.getStationOrder()})}"
+       th:text="${routeDetailsEntity.getRouteId() + ' ' + routeDetailsEntity.getStationId()+ ' ' + routeDetailsEntity.getStationOrder()}">Route
+        Station Order</a>
+</div>
+</body>
+</html>

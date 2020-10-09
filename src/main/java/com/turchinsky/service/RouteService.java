@@ -42,4 +42,6 @@ public class RouteService implements DefaultCRUDService<RouteEntity> {
     }
 
 
+    // TODO: 10/9/2020 if there is no (tickets || trains) then delete all trains, all roite details and then delete route;
+
 }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Train</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+</head>
+<body>
+
+<form th:action="@{/route-details}" th:method="POST" th:object="${routeDetails}">
+
+    <H1>Add new Route Details</H1>
+    <input id="addDetails" type="button" value="Add new section">
+    <p>
+        <label for="route">Select route</label>
+        <select id="route" name="route">
+            <option th:each="routeOption : ${routesList}"
+                    th:text="${routeOption.getName()}" th:value="${routeOption.getId()}"></option>
+        </select>
+
+    </p>
+
+    <p>
+        <label for="station">Select route</label>
+        <select id="station" name="station">
+            <option th:each="stationOption : ${stationsList}"
+                    th:text="${stationOption.getName()}" th:value="${stationOption.getId()}"></option>
+        </select>
+
+    </p>
+
+    <p>
+        <label for="order">Input Number</label>
+        <input disabled id="order" required th:field="*{number}" th:placeholder="${routeDetailsService.}" type="text">
+    </p>
+
+    <p>
+        <input type="submit" value="Add Train">
+    </p>
+</form>
+
+</body>
+</html>

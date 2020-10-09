@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Train</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+    <!--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+    <!--    <script src="/scripts/deleteRouteDetailsScript.js"></script>-->
+</head>
+<body>
+
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--<script src="../../static/js/routeDetailsScript.js"></script>-->
+
+<form th:action="@{/route-details/delete}" th:method="POST"
+      th:object="${routeDetailsEntity}">
+
+    <H1>Are you sure you want to delete this Route Detail?</H1>
+    <!--<h2 th:text="${routeName}"></h2>-->
+    <div class="routeDetailsIndex">
+        <div class="form-row my-sm-2">
+            <div>
+                <input id="routeIdHidden" th:field="*{routeId}" th:value="${routeDetailsEntity.getRouteId()}"
+                       type="hidden">
+                <input id="stationIdHidden" th:field="*{stationId}" th:value="${routeDetailsEntity.getStationId()}"
+                       type="hidden">
+            </div>
+            <div class="input-group col-md-2">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectStation">Route</label>
+                </div>
+                <select class="custom-select" disabled id="selectRoute">
+                    <option th:text="${routeName}" th:value="${routeDetailsEntity.getRouteId()}"></option>
+                </select></div>
+            <div class="input-group col-md-2 offset-xs-1">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectStation">Station</label>
+                </div>
+                <select class="custom-select" disabled id="selectStation">
+                    <option th:text="${stationName}" th:value="${routeDetailsEntity.getStationId()}"></option>
+                </select>
+            </div>
+            <div class="input-group col-md-2 offset-xs-1">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="stationOrderInput">Order</label>
+                </div>
+                <input class="form-control" id="stationOrderInput" min="1" readonly th:field="*{stationOrder}"
+                       th:value="${routeDetailsEntity.getStationOrder()}" type="number">
+            </div>
+            <div class="input-group col-md-2 offset-xs-1">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="kmInput">Km</label>
+                </div>
+                <input class="form-control" id="kmInput" min="1" readonly th:field="*{km}"
+                       th:value="${routeDetailsEntity.getKm()}" type="number">
+            </div>
+            <div class="input-group col-md-2 offset-xs-1">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="stationTypeInput">Type</label>
+                </div>
+                <input class="form-control" id="stationTypeInput" min="1" readonly th:field="*{type}"
+                       th:value="${routeDetailsEntity.getType()}" type="number">
+            </div>
+        </div>
+        <!--    <a th:href="@{/route-details/{routeId}/{stationId}/{stationOrder}(routeId=${routeDetailsEntity.getRouteId()}, stationId=${routeDetailsEntity.getStationId()}, stationOrder=${routeDetailsEntity.getStationOrder()})}"-->
+        <!--       th:text="${routeDetailsEntity.getRouteId() + ' ' + routeDetailsEntity.getStationId()+ ' ' + routeDetailsEntity.getStationOrder()}">Route-->
+        <!--        Station Order</a>-->
+    </div>
+
+    <input class="btn btn-danger" id="deleteRouteDetails" type="submit" value="Delete">
+</form>
+</body>
+</html>

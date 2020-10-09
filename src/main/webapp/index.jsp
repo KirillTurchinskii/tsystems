@@ -15,5 +15,9 @@
     Go to <a href="/passengers">Passengers</a>
 </p>
 
+<p>
+    Go to <a href="/route-details">Route details</a>
+</p>
+
 </body>
 </html>

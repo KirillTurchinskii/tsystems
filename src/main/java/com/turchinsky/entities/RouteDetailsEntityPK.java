@@ -1,10 +1,13 @@
 package com.turchinsky.entities;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Component
 public class RouteDetailsEntityPK implements Serializable {
 
     @Id
@@ -19,6 +22,15 @@ public class RouteDetailsEntityPK implements Serializable {
     @Column(name = "station_order", nullable = false, insertable = false, updatable = false)
     int stationOrder;
 
+
+    public RouteDetailsEntityPK(int routeId, int stationId, int stationOrder) {
+        this.routeId = routeId;
+        this.stationId = stationId;
+        this.stationOrder = stationOrder;
+    }
+
+    public RouteDetailsEntityPK() {
+    }
 
     public int getRouteId() {
         return routeId;
