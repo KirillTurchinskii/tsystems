@@ -1,6 +1,6 @@
 package com.turchinsky.entities;
 
-import com.sun.istack.internal.NotNull;
+//import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 
@@ -10,7 +10,6 @@ public class StationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private int id;
 
     @Basic

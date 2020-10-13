@@ -87,6 +87,14 @@ public class RouteDetailsDao implements ExtendedDao<RouteDetailsEntity, RouteDet
 //        Query query = entityManager.createQuery("UPDATE RouteDetailsEntity SET e.st = "+entity.s);
 //    }
 
+    //    @Override
+    public RouteDetailsEntity update(RouteDetailsEntity routeDetailsEntity) {
+        entityManager.getTransaction().begin();
+        entityManager.persist(routeDetailsEntity);
+        entityManager.getTransaction().commit();
+        return routeDetailsEntity;
+    }
+
     @Override
     public RouteDetailsEntity get(RouteDetailsEntityPK routeDetailsEntityPK) {
         return entityManager.find(RouteDetailsEntity.class, routeDetailsEntityPK);
@@ -98,23 +106,18 @@ public class RouteDetailsDao implements ExtendedDao<RouteDetailsEntity, RouteDet
         return query.getResultList();
     }
 
-
     @Override
     public RouteDetailsEntity save(RouteDetailsEntity routeDetailsEntity) {
         entityManager.getTransaction().begin();
-        if (routeDetailsEntity.getRouteId() == 0 && routeDetailsEntity.getStationId() == 0 && routeDetailsEntity
-                .getStationOrder() == 0) {
-//            routeDetailsEntity.setRefRouteEntity();
-            System.out.println(routeDetailsEntity);
-            entityManager.persist(routeDetailsEntity);
-        } else {
-            System.out.println(routeDetailsEntity);
-            entityManager.merge(routeDetailsEntity);
-        }
+//        if (routeDetailsEntity.getRouteId() == 0 && routeDetailsEntity.getStationId() == 0 && routeDetailsEntity
+//                .getStationOrder() == 0) {
+//            entityManager.persist(routeDetailsEntity);
+//        } else {
+        entityManager.merge(routeDetailsEntity);
+//        }
         entityManager.getTransaction().commit();
         return routeDetailsEntity;
     }
-
 
     @Override
     public void delete(RouteDetailsEntity routeDetailsEntity) {

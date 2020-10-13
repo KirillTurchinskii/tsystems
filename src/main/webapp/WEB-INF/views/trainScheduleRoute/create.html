@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule initializer</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../../../scripts/createTrainSchedule.js"></script>
+</head>
+<body>
+<h1>Add Train by route and time</h1>
+<div class="trainScheduleRoute">
+    <div class="form-row my-sm-2">
+        <div class="input-group col-md-2">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectTrain">Train</label>
+            </div>
+            <select class="custom-select" id="selectTrain">
+                <option th:each="trainEntity : ${trainsList}" th:text="${trainEntity.getNumber()}"
+                        th:value="${trainEntity.getId()}"></option>
+            </select>
+        </div>
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectRoute">Route</label>
+            </div>
+            <select class="custom-select" id="selectRoute">
+                <option th:each="routeEntity : ${routesList}"
+                        th:text="${routeEntity.getName()}" th:value="${routeEntity.getId()}"></option>
+            </select>
+        </div>
+
+
+        <div class="input-group col-md-3 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="timeInput">Departure Time</label>
+            </div>
+            <input class="form-control" id="timeInput"
+                   type="datetime-local">
+        </div>
+
+        <!--        <div class="input-group col-md-2 offset-xs-1">-->
+        <!--            <div class="input-group-prepend">-->
+        <!--                <label class="input-group-text" for="fSeats">Free Seats</label>-->
+        <!--            </div>-->
+        <!--            <input class="form-control" id="fSeats" readonly th:value="${trainEntity.getCapacity()}"-->
+        <!--                   type="number">-->
+        <!--        </div>-->
+
+        <!--        <div class="input-group col-md-2 offset-xs-1">-->
+        <!--            <div class="input-group-prepend">-->
+        <!--                <label class="input-group-text" for="oSeats">Ordered Seats</label>-->
+        <!--            </div>-->
+        <!--            <input class="form-control" id="oSeats" readonly th:value="0"-->
+        <!--                   type="number">-->
+        <!--        </div>-->
+        <button class="btn btn-success" id="createButton" type="button">Create schedule train route</button>
+        <h3 id="resultStr"></h3>
+    </div>
+</div>
+</body>
+</html>

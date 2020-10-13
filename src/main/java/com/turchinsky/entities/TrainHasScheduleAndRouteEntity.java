@@ -9,11 +9,11 @@ import java.sql.Timestamp;
 public class TrainHasScheduleAndRouteEntity {
 
     @Id
-    @Column(name = "train_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "train_id", nullable = false)
     int trainId;
 
     @Id
-    @Column(name = "route_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "route_id", nullable = false)
     int routeId;
 
     @Id
@@ -21,19 +21,19 @@ public class TrainHasScheduleAndRouteEntity {
     Timestamp departureTime;
 
     @Basic
-    @Column(name = "ordered_seats", nullable = true)
+    @Column(name = "ordered_seats")
     int orderedSeats;
 
     @Basic
-    @Column(name = "free_seats", nullable = true)
+    @Column(name = "free_seats")
     int freeSeats;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "train_id", referencedColumnName = "id")
+    @JoinColumn(name = "train_id", referencedColumnName = "id", insertable = false, updatable = false)
     TrainEntity refTrainEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "route_id", referencedColumnName = "id")
+    @JoinColumn(name = "route_id", referencedColumnName = "id", insertable = false, updatable = false)
     RouteEntity refRouteEntity;
 
     public int getTrainId() {

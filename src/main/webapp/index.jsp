@@ -19,5 +19,9 @@
     Go to <a href="/route-details">Route details</a>
 </p>
 
+<p>
+    Go to <a href="/train-schedule-route">Train Schedule Route</a>
+</p>
+
 </body>
 </html>

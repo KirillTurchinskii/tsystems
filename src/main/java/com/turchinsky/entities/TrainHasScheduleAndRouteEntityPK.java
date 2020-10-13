@@ -43,4 +43,19 @@ public class TrainHasScheduleAndRouteEntityPK implements Serializable {
         this.departureTime = departureTime;
     }
 
+    public TrainHasScheduleAndRouteEntityPK(int trainId, int routeId, Timestamp departureTime) {
+        this.trainId = trainId;
+        this.routeId = routeId;
+        this.departureTime = departureTime;
+    }
+
+    public TrainHasScheduleAndRouteEntityPK() {
+    }
+
+    public TrainHasScheduleAndRouteEntityPK(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
+        this.trainId = trainHasScheduleAndRouteEntity.getTrainId();
+        this.routeId = trainHasScheduleAndRouteEntity.getRouteId();
+        this.departureTime = trainHasScheduleAndRouteEntity.getDepartureTime();
+    }
+
 }

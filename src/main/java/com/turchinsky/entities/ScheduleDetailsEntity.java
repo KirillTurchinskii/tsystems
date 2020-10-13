@@ -9,19 +9,19 @@ import java.sql.Timestamp;
 public class ScheduleDetailsEntity {
 
     @Basic
-    @Column(name = "route_id", insertable = false, updatable = false)
+    @Column(name = "route_id")
     private int routeId;
 
     @Basic
-    @Column(name = "station_id", insertable = false, updatable = false)
+    @Column(name = "station_id")
     private int stationId;
 
     @Basic
-    @Column(name = "station_order", insertable = false, updatable = false)
+    @Column(name = "station_order")
     private int stationOrder;
 
     @Basic
-    @Column(name = "train_id", insertable = false, updatable = false)
+    @Column(name = "train_id")
     private int trainId;
 
     @Id
@@ -47,9 +47,12 @@ public class ScheduleDetailsEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
-            @JoinColumn(name = "route_id", referencedColumnName = "route_id", updatable = false, insertable = false),
-            @JoinColumn(name = "station_id", referencedColumnName = "station_id", updatable = false, insertable = false),
-            @JoinColumn(name = "station_order", referencedColumnName = "station_order", updatable = false, insertable = false)}
+                         @JoinColumn(name = "route_id", referencedColumnName = "route_id", updatable = false,
+                                     insertable = false),
+                         @JoinColumn(name = "station_id", referencedColumnName = "station_id", updatable = false,
+                                     insertable = false),
+                         @JoinColumn(name = "station_order", referencedColumnName = "station_order", updatable = false,
+                                     insertable = false)}
     )
     private RouteDetailsEntity refRouteDetailsEntity;
 
@@ -57,7 +60,24 @@ public class ScheduleDetailsEntity {
     @JoinColumn(name = "train_id", referencedColumnName = "id", updatable = false, insertable = false)
     private TrainEntity refTrainEntity;
 
-//    @OneToMany(mappedBy = "refScheduleDetailsEntity")
+
+    public ScheduleDetailsEntity() {
+    }
+
+    public ScheduleDetailsEntity(int routeId, int stationId, int stationOrder, int trainId,
+                                 Timestamp arrivalTime, Timestamp departureTime, int freeSeats, int orderedSeats) {
+        this.routeId = routeId;
+        this.stationId = stationId;
+        this.stationOrder = stationOrder;
+        this.trainId = trainId;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
+        this.freeSeats = freeSeats;
+        this.orderedSeats = orderedSeats;
+    }
+
+
+    //    @OneToMany(mappedBy = "refScheduleDetailsEntity")
 //    private List<TicketEntity> refTicketEntities;
 
 

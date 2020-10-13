@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Train</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+
+</head>
+<body>
+<h1>All Trains by routes and time</h1>
+<div class="trainScheduleRoute" th:each="trainScheduleEntity : ${trainScheduleRouteEntities}">
+    <div class="form-row my-sm-2">
+        <div class="input-group col-md-2">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectTrain">Train</label>
+            </div>
+            <select class="custom-select" disabled id="selectTrain">
+                <option th:each="trainEntity : ${trainsList}"
+                        th:selected="${trainEntity.getId() == trainScheduleEntity.getTrainId()}"
+                        th:text="${trainEntity.getNumber()}" th:value="${trainEntity.getId()}"></option>
+            </select>
+        </div>
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectRoute">Route</label>
+            </div>
+            <select class="custom-select" disabled id="selectRoute">
+                <option th:each="routeEntity : ${routesList}"
+                        th:selected="${routeEntity.getId() == trainScheduleEntity.getRouteId()}"
+                        th:text="${routeEntity.getName()}" th:value="${routeEntity.getId()}"></option>
+            </select>
+        </div>
+
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="timeInput">Departure Time</label>
+            </div>
+            <input class="form-control" id="timeInput" readonly th:value="${trainScheduleEntity.getDepartureTime()}"
+                   type="text">
+        </div>
+
+        <a class="btn btn-primary" role="button"
+           th:href="@{/train-schedule-route/{trainId}/{roteId}/{dateTime}(trainId=${trainScheduleEntity.getTrainId()}, roteId=${trainScheduleEntity.getRouteId()}, dateTime=${trainScheduleEntity.getDepartureTime()})}">Details</a>
+    </div>
+</div>
+</body>
+</html>

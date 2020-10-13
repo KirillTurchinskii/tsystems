@@ -62,6 +62,7 @@ public class PassengerController {
         } else {
             return "redirect:/passengers/new-passenger/" + passengerEntity.getId() + "/update";
         }
+        /// TODO: 10/9/2020 check fields before update. Empty string is valid in username?
     }
 
     @GetMapping("/{id}/delete")

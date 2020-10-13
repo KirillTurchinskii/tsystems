@@ -57,7 +57,6 @@ $(function () {
                     }).done(function (res) {
                         if (res) {
                             var container = $("#resultStr");
-                            container.style = "color:green";
                             container.html("Updated");
                         } else {
                             alertInfo("New object doesnt equals to saved");
