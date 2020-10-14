@@ -2,7 +2,6 @@ package com.turchinsky.controllers;
 
 
 import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
-import com.turchinsky.entities.TrainHasScheduleAndRouteEntityPK;
 import com.turchinsky.service.*;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -51,7 +50,7 @@ public class TrainHasScheduleAndRouteController {
                        @PathVariable("departureTime") Timestamp departureTime, Model model) {
 
         TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity = trainHasScheduleAndRouteService
-                .get(new TrainHasScheduleAndRouteEntityPK(trainId, roteId, departureTime));
+                .getByTrainRoteDepartureTime(trainId, roteId, departureTime);
 
         model.addAttribute("trainScheduleEntity", trainHasScheduleAndRouteEntity);
         model.addAttribute("routeEntity", routeService.get(roteId));

@@ -5,17 +5,14 @@ $(function () {
         alert(info);
     }
 
-
     var startTrainButton = $("#startTrain");
 
-
     var d = new Date($("#depaT").val());
-
-    // $("timeInput").value = $("#depaT");
 
     startTrainButton.click(function () {
 
         var trainScheduleRoute = {
+            routeGroupId: $("#routeGroupIdInput").val(),
             trainId: $("#selectTrain").val(),
             routeId: $("#selectRoute").val(),
             departureTime: d,
@@ -24,7 +21,6 @@ $(function () {
         };
 
         var startLink = "http://localhost:8080/train-schedule-route/start-train";
-
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -36,7 +32,6 @@ $(function () {
         }).done(function (result) {
             if (result) {
                 var container = $("#resultStr");
-                container.style.color = "green";
                 container.html("Started");
             } else {
                 alertInfo("Train can not be started");
@@ -48,8 +43,6 @@ $(function () {
     deleteButton.click(function () {
 
         var deleteLink = "http://localhost:8080/train-schedule-route/delete";
-
-        // var testLink = "http://localhost:8080/train-schedule-route/delete";
 
         var trainRoute = {
             trainId: $("#selectTrain").val(),
@@ -68,7 +61,6 @@ $(function () {
             method: "POST",
             data: JSON.stringify(trainRoute)
         });
-
         window.location.href = "http://localhost:8080/train-schedule-route";
     });
 });

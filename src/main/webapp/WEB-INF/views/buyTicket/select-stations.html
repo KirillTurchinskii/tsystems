@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose stations</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../../../scripts/selectStations.js"></script>
+</head>
+<body>
+<h1>Select station A and station B to find any routes</h1>
+<div class="form-row my-sm-2">
+    <div class="input-group col-md-2">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="selectStationFrom">Station From</label>
+        </div>
+        <select class="custom-select" id="selectStationFrom">
+            <option th:each="stationEntity : ${stationsList}"
+                    th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+        </select>
+    </div>
+    <div class="input-group col-md-2">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="selectStationTo">Station To</label>
+        </div>
+        <select class="custom-select" id="selectStationTo">
+            <option th:each="stationEntity : ${stationsList}"
+                    th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+        </select>
+    </div>
+    <div class="input-group col-md-3 offset-xs-1">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="timeFrom">Time From</label>
+        </div>
+        <input class="form-control" id="timeFrom"
+               type="datetime-local">
+    </div>
+    <div class="input-group col-md-3 offset-xs-1">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="timeTo">Time To</label>
+        </div>
+        <input class="form-control" id="timeTo"
+               type="datetime-local">
+    </div>
+    <button class="btn btn-success" id="findTrains" type="button">Search for tickets</button>
+</div>
+</body>
+</html>

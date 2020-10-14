@@ -1,7 +1,6 @@
 package com.turchinsky.dao;
 
 import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
-import com.turchinsky.entities.TrainHasScheduleAndRouteEntityPK;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -9,12 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Component
 @Repository
 public class TrainHasScheduleAndRouteDao
-        implements ExtendedDao<TrainHasScheduleAndRouteEntity, TrainHasScheduleAndRouteEntityPK> {
+        implements Dao<TrainHasScheduleAndRouteEntity> {
 
     private static final EntityManagerFactory emFactoryObj;
 
@@ -31,9 +31,16 @@ public class TrainHasScheduleAndRouteDao
         return trainHasScheduleAndRouteEntity;
     }
 
-    @Override
-    public TrainHasScheduleAndRouteEntity get(TrainHasScheduleAndRouteEntityPK trainHasScheduleAndRouteEntityPK) {
-        return entityManager.find(TrainHasScheduleAndRouteEntity.class, trainHasScheduleAndRouteEntityPK);
+    public TrainHasScheduleAndRouteEntity getByTrainRoteDepartureTime(int trainId, int routeId,
+                                                                      Timestamp departureTime) {
+        Query query = entityManager.createQuery(
+                "SELECT e FROM TrainHasScheduleAndRouteEntity e where e.trainId=" +
+                        trainId + " and e.routeId=" + routeId + " and e.departureTime='" + departureTime + "'");
+        return (TrainHasScheduleAndRouteEntity) query.getSingleResult();
+    }
+
+    @Override public TrainHasScheduleAndRouteEntity get(int id) {
+        return entityManager.find(TrainHasScheduleAndRouteEntity.class, id);
     }
 
     @Override

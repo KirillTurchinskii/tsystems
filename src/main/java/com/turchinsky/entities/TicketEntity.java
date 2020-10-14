@@ -16,35 +16,39 @@ public class TicketEntity {
     private int price;
 
     @Basic
-    @Column(name = "station_from", insertable = false, updatable = false)
+    @Column(name = "station_from")
     private int stationFrom;
 
     @Basic
-    @Column(name = "station_to", insertable = false, updatable = false)
+    @Column(name = "station_to")
     private int stationTo;
 
     @Basic
-    @Column(name = "line_id", insertable = false, updatable = false)
+    @Column(name = "line_id")
     private int lineId;
 
     @Basic
-    @Column(name = "passenger_id", insertable = false, updatable = false)
+    @Column(name = "passenger_id")
     private int passengerId;
 
+    @Basic
+    @Column(name = "routegroupid")
+    private int routeGroupId;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "station_from", referencedColumnName = "id")
+    @JoinColumn(name = "station_from", referencedColumnName = "id", insertable = false, updatable = false)
     private StationEntity refStationFrom;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "station_to", referencedColumnName = "id")
+    @JoinColumn(name = "station_to", referencedColumnName = "id", insertable = false, updatable = false)
     private StationEntity refStationTo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
+    @JoinColumn(name = "line_id", referencedColumnName = "line_id", insertable = false, updatable = false)
     private ScheduleDetailsEntity refScheduleDetailsEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "passenger_id", referencedColumnName = "id")
+    @JoinColumn(name = "passenger_id", referencedColumnName = "id", insertable = false, updatable = false)
     private PassengerEntity refPassengerEntity;
 
 
@@ -118,6 +122,14 @@ public class TicketEntity {
 
     public void setRefScheduleDetailsEntity(ScheduleDetailsEntity refScheduleDetailsEntity) {
         this.refScheduleDetailsEntity = refScheduleDetailsEntity;
+    }
+
+    public int getRouteGroupId() {
+        return routeGroupId;
+    }
+
+    public void setRouteGroupId(int groupId) {
+        this.routeGroupId = groupId;
     }
 
     public PassengerEntity getRefPassengerEntity() {

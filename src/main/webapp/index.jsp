@@ -23,5 +23,9 @@
     Go to <a href="/train-schedule-route">Train Schedule Route</a>
 </p>
 
+<p>
+    Go to <a href="/sbb">Buy Tickets</a>
+</p>
+
 </body>
 </html>

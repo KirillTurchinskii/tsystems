@@ -12,6 +12,7 @@
 <h1>Trains by route and time</h1>
 <div class="trainScheduleRoute">
     <div class="form-row my-sm-2">
+        <input id="routeGroupIdInput" th:value="${trainScheduleEntity.getRouteGroupId()}" type="hidden">
         <div class="input-group col-md-2">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="selectTrain">Train</label>
@@ -37,7 +38,7 @@
                 <label class="input-group-text" for="depaT">Departure Time</label>
             </div>
             <!--            <input class="form-control" id="timeInput" type="datetime-local">-->
-            <input class="form-control" id="depaT" th:value="${departureT}" type="text">
+            <input class="form-control" id="depaT" readonly th:value="${departureT}" type="text">
         </div>
         <input id="reqTime" th:value="${departureT}" type="hidden">
         <div class="input-group col-md-2 offset-xs-1">
@@ -56,8 +57,8 @@
                    type="number">
         </div>
         <button class="btn btn-success" id="startTrain" type="button">Start Train</button>
-        <h3 id="resultStr"></h3>
         <button class="btn btn-danger" id="deleteTSR" type="button">Delete</button>
+        <h3 id="resultStr"></h3>
     </div>
 </div>
 </body>

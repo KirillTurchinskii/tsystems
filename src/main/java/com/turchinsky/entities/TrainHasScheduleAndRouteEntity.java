@@ -5,18 +5,20 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "train_has_schedule_and_route")
-@IdClass(TrainHasScheduleAndRouteEntityPK.class)
 public class TrainHasScheduleAndRouteEntity {
 
+
     @Id
+    @Column(name = "routegroupid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int routeGroupId;
+
     @Column(name = "train_id", nullable = false)
     int trainId;
 
-    @Id
     @Column(name = "route_id", nullable = false)
     int routeId;
 
-    @Id
     @Column(name = "departure_time", nullable = false)
     Timestamp departureTime;
 
@@ -35,6 +37,14 @@ public class TrainHasScheduleAndRouteEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "route_id", referencedColumnName = "id", insertable = false, updatable = false)
     RouteEntity refRouteEntity;
+
+    public int getRouteGroupId() {
+        return routeGroupId;
+    }
+
+    public void setRouteGroupId(int routeGroupId) {
+        this.routeGroupId = routeGroupId;
+    }
 
     public int getTrainId() {
         return trainId;
@@ -92,10 +102,10 @@ public class TrainHasScheduleAndRouteEntity {
         this.refRouteEntity = refRouteEntity;
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "TrainHasScheduleAndRouteEntity{" +
-                "trainId=" + trainId +
+                "routeGroupId=" + routeGroupId +
+                ", trainId=" + trainId +
                 ", routeId=" + routeId +
                 ", departureTime=" + departureTime +
                 ", orderedSeats=" + orderedSeats +

@@ -2,14 +2,14 @@ package com.turchinsky.service;
 
 import com.turchinsky.dao.TrainHasScheduleAndRouteDao;
 import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
-import com.turchinsky.entities.TrainHasScheduleAndRouteEntityPK;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
 public class TrainHasScheduleAndRouteService
-        implements ExtendedCRUDService<TrainHasScheduleAndRouteEntity, TrainHasScheduleAndRouteEntityPK> {
+        implements DefaultCRUDService<TrainHasScheduleAndRouteEntity> {
 
     private final TrainHasScheduleAndRouteDao trainHasScheduleAndRouteDao;
 
@@ -28,9 +28,13 @@ public class TrainHasScheduleAndRouteService
         return null;
     }
 
-    @Override
-    public TrainHasScheduleAndRouteEntity get(TrainHasScheduleAndRouteEntityPK trainHasScheduleAndRouteEntityPK) {
-        return trainHasScheduleAndRouteDao.get(trainHasScheduleAndRouteEntityPK);
+    public TrainHasScheduleAndRouteEntity getByTrainRoteDepartureTime(int trainId, int routeId,
+                                                                      Timestamp departureTime) {
+        return trainHasScheduleAndRouteDao.getByTrainRoteDepartureTime(trainId, routeId, departureTime);
+    }
+
+    @Override public TrainHasScheduleAndRouteEntity get(int id) {
+        return trainHasScheduleAndRouteDao.get(id);
     }
 
     @Override
@@ -45,10 +49,7 @@ public class TrainHasScheduleAndRouteService
 
     @Override
     public void delete(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
-        TrainHasScheduleAndRouteEntityPK trainHasScheduleAndRouteEntityPK =
-                new TrainHasScheduleAndRouteEntityPK(trainHasScheduleAndRouteEntity);
-
-        TrainHasScheduleAndRouteEntity managedEntity = get(trainHasScheduleAndRouteEntityPK);
+        TrainHasScheduleAndRouteEntity managedEntity = get(trainHasScheduleAndRouteEntity.getRouteGroupId());
         trainHasScheduleAndRouteDao.delete(managedEntity);
     }
 

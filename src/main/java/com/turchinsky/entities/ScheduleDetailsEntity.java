@@ -45,6 +45,10 @@ public class ScheduleDetailsEntity {
     @Column(name = "ordered_seats")
     private int orderedSeats;
 
+    @Basic
+    @Column(name = "routegroupid")
+    private int routeGroupId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
                          @JoinColumn(name = "route_id", referencedColumnName = "route_id", updatable = false,
@@ -64,8 +68,9 @@ public class ScheduleDetailsEntity {
     public ScheduleDetailsEntity() {
     }
 
-    public ScheduleDetailsEntity(int routeId, int stationId, int stationOrder, int trainId,
-                                 Timestamp arrivalTime, Timestamp departureTime, int freeSeats, int orderedSeats) {
+    public ScheduleDetailsEntity(int routeGroupId, int stationId, int stationOrder, int trainId,
+                                 Timestamp arrivalTime, Timestamp departureTime, int freeSeats, int orderedSeats,
+                                 int routeId) {
         this.routeId = routeId;
         this.stationId = stationId;
         this.stationOrder = stationOrder;
@@ -74,8 +79,8 @@ public class ScheduleDetailsEntity {
         this.departureTime = departureTime;
         this.freeSeats = freeSeats;
         this.orderedSeats = orderedSeats;
+        this.routeGroupId = routeGroupId;
     }
-
 
     //    @OneToMany(mappedBy = "refScheduleDetailsEntity")
 //    private List<TicketEntity> refTicketEntities;
@@ -161,6 +166,14 @@ public class ScheduleDetailsEntity {
         this.refRouteDetailsEntity = refRouteDetailsEntity;
     }
 
+    public int getRouteGroupId() {
+        return routeGroupId;
+    }
+
+    public void setRouteGroupId(int groupId) {
+        this.routeGroupId = groupId;
+    }
+
     public TrainEntity getRefTrainEntity() {
         return refTrainEntity;
     }
@@ -177,8 +190,8 @@ public class ScheduleDetailsEntity {
 //        this.refTicketEntities = refTicketEntities;
 //    }
 
-    @Override
-    public String toString() {
+
+    @Override public String toString() {
         return "ScheduleDetailsEntity{" +
                 "routeId=" + routeId +
                 ", stationId=" + stationId +
@@ -189,6 +202,7 @@ public class ScheduleDetailsEntity {
                 ", departureTime=" + departureTime +
                 ", freeSeats=" + freeSeats +
                 ", orderedSeats=" + orderedSeats +
+                ", routeGroupId=" + routeGroupId +
                 '}';
     }
 

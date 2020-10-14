@@ -5,6 +5,7 @@ import com.turchinsky.entities.RouteDetailsEntity;
 import com.turchinsky.entities.ScheduleDetailsEntity;
 import com.turchinsky.entities.TrainEntity;
 import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
+import com.turchinsky.transfer.StationsAndTimeForTicket;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -63,13 +64,20 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
                 previousKm = routeDetailsEntity.getKm();
             }
 
-            ScheduleDetailsEntity scheduleDetailsEntity = new ScheduleDetailsEntity(
-                    trainHasScheduleAndRouteEntity.getRouteId(), routeDetailsEntity.getStationId(),
-                    routeDetailsEntity.getStationOrder(), trainHasScheduleAndRouteEntity.getTrainId(), arrivalTime,
-                    departureTime, capacity, 0);
-            System.out.println(scheduleDetailsEntity);
+            ScheduleDetailsEntity scheduleDetailsEntity =
+                    new ScheduleDetailsEntity(trainHasScheduleAndRouteEntity.getRouteGroupId(),
+                                              routeDetailsEntity.getStationId(), routeDetailsEntity.getStationOrder(),
+                                              trainHasScheduleAndRouteEntity
+                                                      .getTrainId(), arrivalTime, departureTime, capacity, 0,
+                                              trainHasScheduleAndRouteEntity.getRouteId());
+
             save(scheduleDetailsEntity);
         }
+    }
+
+    public List<ScheduleDetailsEntity> getByStationsAndTime(StationsAndTimeForTicket stationsAndTimeForTicket) {
+        return scheduleDetailsDao.getByStationsAndTime(stationsAndTimeForTicket);
+
     }
 
     @Override
