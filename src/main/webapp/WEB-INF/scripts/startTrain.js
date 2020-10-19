@@ -45,6 +45,7 @@ $(function () {
         var deleteLink = "http://localhost:8080/train-schedule-route/delete";
 
         var trainRoute = {
+            routeGroupId: $("#routeGroupIdInput").val(),
             trainId: $("#selectTrain").val(),
             routeId: $("#selectRoute").val(),
             departureTime: d,
@@ -61,6 +62,6 @@ $(function () {
             method: "POST",
             data: JSON.stringify(trainRoute)
         });
-        window.location.href = "http://localhost:8080/train-schedule-route";
+        window.location = "http://localhost:8080/train-schedule-route";
     });
 });

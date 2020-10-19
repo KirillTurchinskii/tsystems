@@ -12,6 +12,7 @@ public class TrainsService implements DefaultCRUDService<TrainEntity> {
 
     private final TrainsDao trainsDao;
 
+
     public TrainsService(TrainsDao trainsDao) {
         this.trainsDao = trainsDao;
     }
@@ -34,6 +35,7 @@ public class TrainsService implements DefaultCRUDService<TrainEntity> {
     @Override
     public void delete(TrainEntity trainEntity) {
         TrainEntity managedEntity = get(trainEntity.getId());
+
         trainsDao.delete(managedEntity);
     }
 

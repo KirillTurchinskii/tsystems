@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedule initializer</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<h1>Trains by route and time</h1>
+<div class="trainScheduleRoute">
+    <div class="form-row my-sm-2">
+        <input id="routeGroupIdInput" th:value="${trainScheduleEntity.getRouteGroupId()}" type="hidden">
+        <div class="input-group col-md-2">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectTrain">Train</label>
+            </div>
+            <select class="custom-select" disabled id="selectTrain">
+                <option selected th:text="${trainEntity.getNumber()}" th:value="${trainEntity.getId()}"></option>
+            </select>
+        </div>
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="selectRoute">Route</label>
+            </div>
+            <select class="custom-select" disabled id="selectRoute">
+                <option th:selected="${routeEntity.getId() == trainScheduleEntity.getRouteId()}"
+                        th:text="${routeEntity.getName()}" th:value="${routeEntity.getId()}"></option>
+            </select>
+        </div>
+
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="depaT">Departure Time</label>
+            </div>
+            <!--            <input class="form-control" id="timeInput" type="datetime-local">-->
+            <input class="form-control" id="depaT" readonly th:value="${departureT}" type="text">
+        </div>
+        <input id="reqTime" th:value="${departureT}" type="hidden">
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="fSeats">Free Seats</label>
+            </div>
+            <input class="form-control" id="fSeats" readonly th:value="${trainEntity.getCapacity()}"
+                   type="number">
+        </div>
+
+        <div class="input-group col-md-2 offset-xs-1">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="oSeats">Ordered Seats</label>
+            </div>
+            <input class="form-control" id="oSeats" readonly th:value="0"
+                   type="number">
+        </div>
+
+    </div>
+    <div class="ticketEntity my-3" th:each="ticketEntity : ${ticketsList}">
+
+
+        <div class="form-row my-4">
+            <div class="input-group col-sm-2 offset-xs-1">
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="stationFromArrivalTime">
+                            <option th:each="scheduleDetailsEntity : ${scheduleDetails}"
+                                    th:selected="${scheduleDetailsEntity.getLineId() == ticketEntity.getLineIdFrom()}"
+                                    th:text="${scheduleDetailsEntity.getArrivalTime()}"
+                                    th:value="${scheduleDetailsEntity.getArrivalTime()}">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="selectStationFrom">
+                            <option th:each="stationEntity : ${stationsList}"
+                                    th:selected="${stationEntity.getId() == ticketEntity.getStationFrom()}"
+                                    th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="stationFromDepartureTime">
+                            <option th:each="scheduleDetailsEntity : ${scheduleDetails}"
+                                    th:selected="${scheduleDetailsEntity.getLineId() == ticketEntity.getLineIdFrom()}"
+                                    th:text="${scheduleDetailsEntity.getDepartureTime()}"
+                                    th:value="${scheduleDetailsEntity.getDepartureTime()}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <h1>TO</h1>
+            </div>
+
+            <div class="col-sm-2 input-group offset-xs-1">
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="stationToArrivalTime">
+                            <option th:each="scheduleDetailsEntity : ${scheduleDetails}"
+                                    th:selected="${scheduleDetailsEntity.getLineId() == ticketEntity.getLineIdTo()}"
+                                    th:text="${scheduleDetailsEntity.getArrivalTime()}"
+                                    th:value="${scheduleDetailsEntity.getArrivalTime()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="selectStationTo">
+                            <option th:each="stationEntity : ${stationsList}"
+                                    th:selected="${stationEntity.getId() == ticketEntity.getStationTo()}"
+                                    th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12">
+                        <select class="custom-select" disabled id="stationToDepartureTime">
+                            <option th:each="scheduleDetailsEntity : ${scheduleDetails}"
+                                    th:selected="${scheduleDetailsEntity.getLineId() == ticketEntity.getLineIdTo()}"
+                                    th:text="${scheduleDetailsEntity.getDepartureTime()}"
+                                    th:value="${scheduleDetailsEntity.getDepartureTime()}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3 mb-3">
+            <label for="validationCustom01">First name</label>
+            <select class="custom-select" disabled id="validationCustom01">
+                <option th:each="ticketKeeper : ${passengersLst}"
+                        th:selected="${ticketKeeper.getId() == ticketEntity.getHolderId()}"
+                        th:text="${ticketKeeper.getName()}"
+                        th:value="${ticketKeeper.getName()}"></option>
+
+            </select>
+
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="validationCustom02">Last name</label>
+            <select class="custom-select" disabled id="validationCustom02">
+                <option th:each="ticketKeeper : ${passengersLst}"
+                        th:selected="${ticketKeeper.getId() == ticketEntity.getHolderId()}"
+                        th:text="${ticketKeeper.getSurname()}"
+                        th:value="${ticketKeeper.getSurname()}"></option>
+            </select>
+
+        </div>
+        <div class="col-md-3 mb-3">
+            <label class="col-2 col-form-label" for="inputDate">Date</label>
+            <div class="col-mb-2">
+                <select class="custom-select" disabled id="inputDate">
+                    <option th:each="ticketKeeper : ${passengersLst}"
+                            th:selected="${ticketKeeper.getId() == ticketEntity.getHolderId()}"
+                            th:text="${ticketKeeper.getBirthDate()}"
+                            th:value="${ticketKeeper.getBirthDate()}"></option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

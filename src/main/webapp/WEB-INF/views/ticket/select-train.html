@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Train</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
+
+</head>
+<body>
+<h1>All Trains by routes and time</h1>
+<div class="form-row offset-xs-1" th:each="scheduleDetailsGroupMap : ${scheduleDetailsGroup}">
+    <div class="input-group col-sm-2">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="selectTrain">N</label>
+        </div>
+        <select class="custom-select" disabled id="selectTrain">
+            <option th:each="trainEntity : ${trainsList}"
+                    th:selected="${trainEntity.getId() == scheduleDetailsGroupMap.get('first').getTrainId()}"
+                    th:text="${trainEntity.getNumber()}" th:value="${trainEntity.getId()}"></option>
+        </select>
+    </div>
+
+    <div class="input-group col-sm-2 offset-xs-1">
+        <div class="form-row">
+            <div class="col-sm-12">
+                <input class="form-control" id="stationFromArrivalTime" readonly
+                       th:value="${scheduleDetailsGroupMap.get('first').getArrivalTime()}"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12">
+                <!--                <div class="input-group-prepend">-->
+                <!--                    <label class="input-group-text" for="selectRoute"></label>-->
+                <!--                </div>-->
+                <select class="custom-select" disabled id="selectStationFrom">
+                    <option th:each="stationEntity : ${stationsList}"
+                            th:selected="${stationEntity.getId() == scheduleDetailsGroupMap.get('first').getStationId()}"
+                            th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12">
+                <input class="form-control" id="stationFromDepartureTime" readonly
+                       th:value="${scheduleDetailsGroupMap.get('first').getDepartureTime()}"
+                       type="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-1">
+        <h1>=></h1>
+    </div>
+
+    <div class="col-sm-2 input-group offset-xs-1">
+        <div class="form-row">
+            <div class="col-sm-12">
+                <input class="form-control" id="stationToArrivalTime" readonly
+                       th:value="${scheduleDetailsGroupMap.get('second').getArrivalTime()}"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12">
+                <select class="custom-select" disabled id="selectStationTo">
+                    <option th:each="stationEntity : ${stationsList}"
+                            th:selected="${stationEntity.getId() == scheduleDetailsGroupMap.get('second').getStationId()}"
+                            th:text="${stationEntity.getName()}" th:value="${stationEntity.getId()}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12">
+                <input class="form-control" id="stationToDepartureTime" readonly
+                       th:value="${scheduleDetailsGroupMap.get('second').getDepartureTime()}"
+                       type="text">
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" role="button"
+       th:href="@{/sbb/selectTicket/{groupId}/{lineIdFrom}/{lineIdTo}
+    (groupId=${scheduleDetailsGroupMap.get('first').getRouteGroupId()},
+    lineIdFrom=${scheduleDetailsGroupMap.get('first').getLineId()},
+    lineIdTo=${scheduleDetailsGroupMap.get('second').getLineId()})}"
+    >Tickets</a>
+</div>
+</body>
+</html>

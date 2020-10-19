@@ -13,6 +13,7 @@
         <class>com.turchinsky.entities.TrainHasScheduleAndRouteEntity</class>
         <class>com.turchinsky.entities.ScheduleDetailsEntity</class>
         <class>com.turchinsky.entities.TicketEntity</class>
+        <class>com.turchinsky.entities.TicketHolderEntity</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

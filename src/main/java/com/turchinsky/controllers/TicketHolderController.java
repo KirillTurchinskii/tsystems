@@ -1,6 +1,7 @@
 package com.turchinsky.controllers;
 
 
+import com.turchinsky.entities.ScheduleDetailsEntity;
 import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
 import com.turchinsky.service.*;
 import org.springframework.http.MediaType;
@@ -9,15 +10,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.TimeZone;
 
 @Controller
-@RequestMapping("/train-schedule-route")
-public class TrainHasScheduleAndRouteController {
+@RequestMapping("/started-routes")
+public class TicketHolderController {
 
     private final TrainHasScheduleAndRouteService trainHasScheduleAndRouteService;
 
     private final TrainsService trainsService;
+
+    private final StationService stationService;
 
     private final RouteService routeService;
 
@@ -25,38 +29,55 @@ public class TrainHasScheduleAndRouteController {
 
     private final RouteDetailsService routeDetailsService;
 
+    private final TicketService ticketService;
 
-    public TrainHasScheduleAndRouteController(
-            TrainHasScheduleAndRouteService trainHasScheduleAndRouteService,
-            TrainsService trainsService, RouteService routeService, ScheduleDetailsService scheduleDetailsService,
-            RouteDetailsService routeDetailsService) {
+    private final TicketHolderService ticketHolderService;
+
+    public TicketHolderController(TrainHasScheduleAndRouteService trainHasScheduleAndRouteService,
+                                  TrainsService trainsService, StationService stationService,
+                                  RouteService routeService,
+                                  ScheduleDetailsService scheduleDetailsService,
+                                  RouteDetailsService routeDetailsService,
+                                  TicketService ticketService,
+                                  TicketHolderService ticketHolderService) {
         this.trainHasScheduleAndRouteService = trainHasScheduleAndRouteService;
         this.trainsService = trainsService;
+        this.stationService = stationService;
         this.routeService = routeService;
         this.scheduleDetailsService = scheduleDetailsService;
         this.routeDetailsService = routeDetailsService;
+        this.ticketService = ticketService;
+        this.ticketHolderService = ticketHolderService;
     }
 
     @GetMapping
     public String index(Model model) {
+        List<TrainHasScheduleAndRouteEntity> trainHasScheduleAndRouteEntities =
+                trainHasScheduleAndRouteService.getStartedByRoutesGroup();
         model.addAttribute("trainScheduleRouteEntities", trainHasScheduleAndRouteService.getAll());
         model.addAttribute("routesList", routeService.getAll());
         model.addAttribute("trainsList", trainsService.getAll());
-        return "trainScheduleRoute/index";
+        return "ticketKeepper/indexTrainHasSchedule";
     }
 
-    @GetMapping("/{trainId}/{roteId}/{departureTime}")
-    public String show(@PathVariable("trainId") int trainId, @PathVariable("roteId") int roteId,
-                       @PathVariable("departureTime") Timestamp departureTime, Model model) {
+    @GetMapping("/{routeGroupId}")
+    public String show(@PathVariable int routeGroupId, Model model) {
 
         TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity = trainHasScheduleAndRouteService
-                .getByTrainRoteDepartureTime(trainId, roteId, departureTime);
+                .get(routeGroupId);
 
         model.addAttribute("trainScheduleEntity", trainHasScheduleAndRouteEntity);
-        model.addAttribute("routeEntity", routeService.get(roteId));
-        model.addAttribute("trainEntity", trainsService.get(trainId));
+        model.addAttribute("routeEntity", routeService.get(trainHasScheduleAndRouteEntity.getRouteId()));
+        model.addAttribute("trainEntity", trainsService.get(trainHasScheduleAndRouteEntity.getTrainId()));
         model.addAttribute("departureT", trainHasScheduleAndRouteEntity.getDepartureTime());
-        return "trainScheduleRoute/show";
+        model.addAttribute("ticketsList", ticketService.getByRouteGroupId(routeGroupId));
+        model.addAttribute("passengersLst", ticketService.getHoldersByRouteGroupId(routeGroupId));
+        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("stationsList", stationService.getAll());
+        model.addAttribute("scheduleDetails", scheduleDetailsService.getAll());
+        List<ScheduleDetailsEntity> all = scheduleDetailsService.getAll();
+//        all.get(0).
+        return "ticketKeepper/show";
     }
 
     @GetMapping("/create")

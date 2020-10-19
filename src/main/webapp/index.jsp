@@ -27,5 +27,9 @@
     Go to <a href="/sbb">Buy Tickets</a>
 </p>
 
+<p>
+    Go to <a href="/started-routes">Show passengers On routes</a>
+</p>
+
 </body>
 </html>

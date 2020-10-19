@@ -22,6 +22,17 @@ public class TicketsDao implements Dao<TicketEntity> {
 
     private final EntityManager entityManager = emFactoryObj.createEntityManager();
 
+    public List<Integer> getAllHoldersByGroupId(int routeGroupId) {
+        Query query =
+                entityManager.createQuery("select e.holderId from TicketEntity e where e.routeGroupId=" + routeGroupId);
+        return query.getResultList();
+    }
+
+    public List<TicketEntity> getByRouteGroupId(int routeGroupId) {
+        Query query = entityManager.createQuery("select e from TicketEntity e where e.routeGroupId=" + routeGroupId);
+        return query.getResultList();
+    }
+
 
     @Override public TicketEntity get(int id) {
 

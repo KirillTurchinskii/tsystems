@@ -9,7 +9,10 @@ import com.turchinsky.transfer.StationsAndTimeForTicket;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetailsEntity> {
@@ -21,16 +24,14 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
 
     private final TrainsService trainsService;
 
-    private final TrainHasScheduleAndRouteService trainHasScheduleAndRouteService;
+//    private final TrainHasScheduleAndRouteService trainHasScheduleAndRouteService;
 
     public ScheduleDetailsService(ScheduleDetailsDao scheduleDetailsDao,
                                   RouteDetailsService routeDetailsService,
-                                  TrainsService trainsService,
-                                  TrainHasScheduleAndRouteService trainHasScheduleAndRouteService) {
+                                  TrainsService trainsService) {
         this.scheduleDetailsDao = scheduleDetailsDao;
         this.routeDetailsService = routeDetailsService;
         this.trainsService = trainsService;
-        this.trainHasScheduleAndRouteService = trainHasScheduleAndRouteService;
     }
 
     public void initialize(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
@@ -75,9 +76,77 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
         }
     }
 
-    public List<ScheduleDetailsEntity> getByStationsAndTime(StationsAndTimeForTicket stationsAndTimeForTicket) {
-        return scheduleDetailsDao.getByStationsAndTime(stationsAndTimeForTicket);
+//    public List<ScheduleDetailsEntity> getByStationsAndTime(StationsAndTimeForTicket stationsAndTimeForTicket) {
+//        return scheduleDetailsDao.getByStationsAndTime(stationsAndTimeForTicket);
+//
+//    }
 
+    public void deleteScheduleForGroupId(int routeGroupId) {
+        List<ScheduleDetailsEntity> scheduleDetailsEntities = scheduleDetailsDao.getByRouteGroupId(routeGroupId);
+        for (ScheduleDetailsEntity scheduleDetailsEntity :
+                scheduleDetailsEntities) {
+            delete(scheduleDetailsEntity);
+        }
+    }
+
+    public List<Map<String, ScheduleDetailsEntity>> getPairFromToByRouteGroupId(
+            StationsAndTimeForTicket stationsAndTimeForTicket) {
+        List<Map<String, ScheduleDetailsEntity>> mapList = new ArrayList<>();
+        List<Integer> routeGroups = getUsedGroups();
+        Map<String, ScheduleDetailsEntity> scheduleDetailsEntityMap;
+        for (int i :
+                routeGroups) {
+            List<ScheduleDetailsEntity> scheduleDetailsEntityList =
+                    scheduleDetailsDao.getPairByGroupIdStationsAndTime(i, stationsAndTimeForTicket);
+
+            if (scheduleDetailsEntityList.size() == 2) {
+                scheduleDetailsEntityMap = getStationsPair(scheduleDetailsEntityList);
+                System.out.println(scheduleDetailsEntityMap);
+                mapList.add(scheduleDetailsEntityMap);
+            }
+
+        }
+        return mapList;
+    }
+
+    public List<Map<String, ScheduleDetailsEntity>> getPairFromToByRouteGroupId(int stationFrom, int stationTo,
+                                                                                Timestamp timeFrom, Timestamp timeTo) {
+        StationsAndTimeForTicket stationsAndTimeForTicket =
+                new StationsAndTimeForTicket(stationFrom, stationTo, timeFrom, timeTo);
+        return getPairFromToByRouteGroupId(stationsAndTimeForTicket);
+    }
+
+    public int getMinAmountOfTicketsFromList(List<ScheduleDetailsEntity> scheduleDetailsEntities) {
+
+        return scheduleDetailsEntities.stream().map(ScheduleDetailsEntity::getFreeSeats).min(Integer::compare).get();
+    }
+
+    public List<ScheduleDetailsEntity> getStationsGroupByLinesId(int groupId, int lineIdFrom, int lineIdTo) {
+        return scheduleDetailsDao.getStationsGroupByLinesId(groupId, lineIdFrom, lineIdTo);
+    }
+
+    public boolean moreThanTenMinutesToDepartue(int lineIdFrom) {
+        ScheduleDetailsEntity scheduleDetailsEntity = scheduleDetailsDao.get(lineIdFrom);
+        long departureTime = scheduleDetailsEntity.getDepartureTime().getTime();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        long tenMinutes = 10 * 60 * 1000;
+        int compare = Long.compare(departureTime - tenMinutes, currentTime.getTime());
+        return compare > 0;
+    }
+
+    public ScheduleDetailsEntity update(ScheduleDetailsEntity scheduleDetailsEntity) {
+        return scheduleDetailsDao.update(scheduleDetailsEntity);
+    }
+
+    public List<Integer> getUsedGroups() {
+        return scheduleDetailsDao.getUsedGroups();
+    }
+
+    private Map<String, ScheduleDetailsEntity> getStationsPair(List<ScheduleDetailsEntity> scheduleDetailsEntityList) {
+        Map<String, ScheduleDetailsEntity> scheduleDetailsEntityMap = new HashMap<>();
+        scheduleDetailsEntityMap.put("first", scheduleDetailsEntityList.get(0));
+        scheduleDetailsEntityMap.put("second", scheduleDetailsEntityList.get(1));
+        return scheduleDetailsEntityMap;
     }
 
     @Override

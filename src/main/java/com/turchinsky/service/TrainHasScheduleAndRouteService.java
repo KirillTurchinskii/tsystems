@@ -5,6 +5,7 @@ import com.turchinsky.entities.TrainHasScheduleAndRouteEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,11 +18,15 @@ public class TrainHasScheduleAndRouteService
 
     private final TrainsService trainsService;
 
+    private final ScheduleDetailsService scheduleDetailsService;
+
     public TrainHasScheduleAndRouteService(TrainHasScheduleAndRouteDao trainHasScheduleAndRouteDao,
-                                           RouteService routeService, TrainsService trainsService) {
+                                           RouteService routeService, TrainsService trainsService,
+                                           ScheduleDetailsService scheduleDetailsService) {
         this.trainHasScheduleAndRouteDao = trainHasScheduleAndRouteDao;
         this.routeService = routeService;
         this.trainsService = trainsService;
+        this.scheduleDetailsService = scheduleDetailsService;
     }
 
     public TrainHasScheduleAndRouteEntity update(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
@@ -47,9 +52,20 @@ public class TrainHasScheduleAndRouteService
         return trainHasScheduleAndRouteDao.save(trainHasScheduleAndRouteEntity);
     }
 
+    public List<TrainHasScheduleAndRouteEntity> getStartedByRoutesGroup() {
+        List<Integer> usedGroups = scheduleDetailsService.getUsedGroups();
+        List<TrainHasScheduleAndRouteEntity> trainHasScheduleAndRouteEntities = new ArrayList<>();
+        for (Integer i :
+                usedGroups) {
+            trainHasScheduleAndRouteEntities.add(get(i));
+        }
+        return trainHasScheduleAndRouteEntities;
+    }
+
     @Override
     public void delete(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         TrainHasScheduleAndRouteEntity managedEntity = get(trainHasScheduleAndRouteEntity.getRouteGroupId());
+        scheduleDetailsService.deleteScheduleForGroupId(managedEntity.getRouteGroupId());
         trainHasScheduleAndRouteDao.delete(managedEntity);
     }
 

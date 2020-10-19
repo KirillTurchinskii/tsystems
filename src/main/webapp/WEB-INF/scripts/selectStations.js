@@ -14,26 +14,16 @@ $(function () {
 
         var dateTo = new Date($("#timeTo").val());
 
-        var providedData = {
-            stationIdFrom: $("#selectStationFrom").val(),
-            stationIdTo: $("#selectStationTo").val(),
-            timeFrom: dateFrom,
-            timeTo: dateTo
+        if (isNaN(dateFrom) || isNaN(dateTo)) {
+            dateFrom = 0;
+            dateTo = 0;
+            alertInfo("Select Date");
+        } else if ($("#selectStationFrom").val() === $("#selectStationTo").val()) {
+            alertInfo("Select Different Stations");
+        } else {
+            var searchLink = "http://localhost:8080/sbb/show-routes/" + $("#selectStationFrom").val() + "/" + $("#selectStationTo").val() + "/" + dateFrom.getTime() + "/" + dateTo.getTime();
+            window.location.href = searchLink;
         }
-
-        var searchLink = "http://localhost:8080/sbb/show-routes";
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: searchLink,
-            method: "POST",
-            data: JSON.stringify(providedData)
-        }).done(function (result) {
-
-        });
-
     });
 
 });
