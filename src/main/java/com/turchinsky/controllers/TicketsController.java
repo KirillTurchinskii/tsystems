@@ -56,7 +56,7 @@ public class TicketsController {
         List<Map<String, ScheduleDetailsEntity>> scheduleDetailsGroup =
                 scheduleDetailsService.getPairFromToByRouteGroupId(stationFrom, stationTo, timestampFrom, timestampTo);
         model.addAttribute("scheduleDetailsGroup", scheduleDetailsGroup);
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         model.addAttribute("stationsList", stationService.getAll());
         return "ticket/select-train";
     }
@@ -69,7 +69,7 @@ public class TicketsController {
         int minAmmountOfTicketsOnRoute =
                 scheduleDetailsService.getMinAmountOfTicketsFromList(stationsGroupByLinesId);
         model.addAttribute("ticketsLeft", minAmmountOfTicketsOnRoute);
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         model.addAttribute("stationsList", stationService.getAll());
         model.addAttribute("stationFrom", scheduleDetailsService.get(lineIdFrom));
         model.addAttribute("stationTo", scheduleDetailsService.get(lineIdTo));
@@ -84,7 +84,7 @@ public class TicketsController {
         int minAmountOfTicketsOnRoute =
                 scheduleDetailsService.getMinAmountOfTicketsFromList(stationsGroupByLinesId);
         model.addAttribute("ticketsLeft", minAmountOfTicketsOnRoute);
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         model.addAttribute("stationsList", stationService.getAll());
         model.addAttribute("stationFrom", scheduleDetailsService.get(lineIdFrom));
         model.addAttribute("stationTo", scheduleDetailsService.get(lineIdTo));
@@ -107,7 +107,7 @@ public class TicketsController {
                                            ticketDetails.getBirthdate());
             if (minAmountOfTicketsOnRoute < 1 || !ticketService
                     .isUnique(ticketDetails.getGroupId(), ticketHolderEntity) || !scheduleDetailsService
-                    .moreThanTenMinutesToDepartue(ticketDetails.getLineIdFrom())) {
+                    .moreThanTenMinutesToDeparture(ticketDetails.getLineIdFrom())) {
                 return "redirect:/sbb";
             } else {
 

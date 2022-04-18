@@ -28,7 +28,7 @@ public class SBBSpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver() {
+    public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("/WEB-INF/views/");
@@ -37,6 +37,8 @@ public class SBBSpringConfig implements WebMvcConfigurer {
 
         return templateResolver;
     }
+
+
 
     @Bean
     public SpringTemplateEngine templateEngine() {

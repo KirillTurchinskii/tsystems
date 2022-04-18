@@ -19,27 +19,28 @@ public class RouteController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("routeEntities", routeService.getAll());
+        model.addAttribute("routeEntities", routeService.getAllRouteEntities());
         return "routes/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.get(id));
+        model.addAttribute("routeEntity", routeService.getRouteEntityById(id));
         return "routes/show";
     }
 
     @GetMapping("/new-route")
     public String newRoute(Model model) {
-        model.addAttribute("route", new RouteEntity());
+        RouteEntity routeEntity = new RouteEntity(0,"");
+        model.addAttribute("route", routeEntity);
         return "routes/new-route";
     }
 
     @PostMapping()
     public String create(@ModelAttribute("route") RouteEntity routeEntity) {
         if (routeEntity.getName() != null && !routeEntity.getName().equals("") && routeService
-                .checkNameIdentity(routeEntity.getName())) {
-            routeService.save(routeEntity);
+                .checkRouteEntityNameIdentity(routeEntity.getName())) {
+            routeService.saveRouteEntity(routeEntity);
             return "redirect:/routes";
         } else {
             return "redirect:/routes/new-route";
@@ -48,15 +49,15 @@ public class RouteController {
 
     @GetMapping("/{id}/update")
     public String changeRoute(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.get(id));
+        model.addAttribute("routeEntity", routeService.getRouteEntityById(id));
         return "routes/update-route";
     }
 
     @PostMapping("/{id}")
     public String update(@ModelAttribute("routeEntity") RouteEntity routeEntity) {
         if (routeEntity.getName() != null && !routeEntity.getName().equals("") && routeService
-                .checkNameIdentity(routeEntity.getName())) {
-            routeService.save(routeEntity);
+                .checkRouteEntityNameIdentity(routeEntity.getName())) {
+            routeService.updateRouteEntity(routeEntity);
             return "redirect:/routes/" + routeEntity.getId();
         } else {
             return "redirect:/routes/" + routeEntity.getId() + "/update";
@@ -65,13 +66,13 @@ public class RouteController {
 
     @GetMapping("/{id}/delete")
     public String deleteRoute(@PathVariable("id") int id, Model model) {
-        model.addAttribute("routeEntity", routeService.get(id));
+        model.addAttribute("routeEntity", routeService.getRouteEntityById(id));
         return "routes/delete-alert";
     }
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("routeEntity") RouteEntity routeEntity) {
-        routeService.delete(routeEntity);
+        routeService.deleteRouteEntity(routeEntity);
         return "redirect:/routes";
     }
 

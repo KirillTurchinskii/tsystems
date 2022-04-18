@@ -3,7 +3,9 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <!-- Define persistence unit -->
     <persistence-unit name="sbb-pu">
+<!--        <jta-data-source>java:/</jta-data-source>-->
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+<!--        <jta-data-source>java:/SbbTest</jta-data-source>-->
         <class>com.turchinsky.entities.TrainEntity</class>
         <class>com.turchinsky.entities.StationEntity</class>
         <class>com.turchinsky.entities.RouteEntity</class>
@@ -17,10 +19,9 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/sbb"/>
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
-            <property name="javax.persistence.jdbc.password" value="123"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://sbbserverdb.postgres.database.azure.com:5432/sbb?gssEncMode=disable"/>
+            <property name="javax.persistence.jdbc.user" value="postgres@sbbserverdb"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
         </properties>
     </persistence-unit>
 </persistence>

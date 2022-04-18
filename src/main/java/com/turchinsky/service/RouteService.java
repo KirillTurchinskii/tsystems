@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RouteService implements DefaultCRUDService<RouteEntity> {
+public class RouteService/* implements DefaultCRUDService<RouteEntity> */{
 
     private final RouteDao routeDao;
 
@@ -15,29 +15,29 @@ public class RouteService implements DefaultCRUDService<RouteEntity> {
         this.routeDao = routeDao;
     }
 
-    public boolean checkNameIdentity(String name) {
+    public boolean checkRouteEntityNameIdentity(String name) {
         List<RouteEntity> byName = routeDao.getByName(name);
         return byName.size() == 0;
     }
 
-    @Override
-    public List<RouteEntity> getAll() {
+    public RouteEntity updateRouteEntity(RouteEntity routeEntity) {
+        return routeDao.update(routeEntity);
+    }
+
+    public List<RouteEntity> getAllRouteEntities() {
         return routeDao.getAll();
     }
 
-    @Override
-    public RouteEntity save(RouteEntity routeEntity) {
+    public RouteEntity saveRouteEntity(RouteEntity routeEntity) {
         return routeDao.save(routeEntity);
     }
 
-    @Override
-    public void delete(RouteEntity routeEntity) {
-        RouteEntity managedEntity = get(routeEntity.getId());
+    public void deleteRouteEntity(RouteEntity routeEntity) {
+        RouteEntity managedEntity = getRouteEntityById(routeEntity.getId());
         routeDao.delete(managedEntity);
     }
 
-    @Override
-    public RouteEntity get(int id) {
+    public RouteEntity getRouteEntityById(int id) {
         return routeDao.get(id);
     }
 

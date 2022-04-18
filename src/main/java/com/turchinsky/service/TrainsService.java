@@ -8,13 +8,17 @@ import java.util.List;
 
 
 @Service
-public class TrainsService implements DefaultCRUDService<TrainEntity> {
+public class TrainsService/* implements DefaultCRUDService<TrainEntity>*/ {
 
     private final TrainsDao trainsDao;
-
+    private ScheduleDetailsService scheduleDetailsService;
 
     public TrainsService(TrainsDao trainsDao) {
         this.trainsDao = trainsDao;
+    }
+
+    public void setScheduleDetailsService(ScheduleDetailsService scheduleDetailsService) {
+        this.scheduleDetailsService = scheduleDetailsService;
     }
 
     public boolean checkNumberIdentity(String number, TrainEntity trainEntity) {
@@ -22,25 +26,28 @@ public class TrainsService implements DefaultCRUDService<TrainEntity> {
         return (byNumber.size() == 0 || (byNumber.size() == 1 && byNumber.get(0).getId() == trainEntity.getId()));
     }
 
-    @Override
-    public List<TrainEntity> getAll() {
+    /*@Override*/
+    public List<TrainEntity> getAllTrainEntities() {
         return trainsDao.getAll();
     }
 
-    @Override
-    public TrainEntity save(TrainEntity trainEntity) {
+    /*@Override*/
+    public TrainEntity saveTrainEntity(TrainEntity trainEntity) {
         return trainsDao.save(trainEntity);
     }
 
-    @Override
-    public void delete(TrainEntity trainEntity) {
-        TrainEntity managedEntity = get(trainEntity.getId());
+    /*@Override*/
+    public void deleteTrainEntity(TrainEntity trainEntity) {
+        if (!scheduleDetailsService.isTicketBought(trainEntity.getId())){
+            TrainEntity managedEntity = getTrainEntity(trainEntity.getId());
+            trainsDao.delete(managedEntity);
+        }
 
-        trainsDao.delete(managedEntity);
     }
 
-    @Override
-    public TrainEntity get(int id) {
+
+    /*@Override*/
+    public TrainEntity getTrainEntity(int id) {
         return trainsDao.get(id);
     }
 

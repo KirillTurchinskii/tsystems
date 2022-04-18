@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEntity, RouteDetailsEntityPK> {
+public class RouteDetailsService/* implements ExtendedCRUDService<RouteDetailsEntity, RouteDetailsEntityPK> */{
 
     private final RouteDetailsDao routeDetailsDao;
 
@@ -29,34 +29,22 @@ public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEnti
     public boolean checkIdentity(RouteDetailsEntity routeDetailsEntity) {
         RouteDetailsEntityPK pk = routeDetailsEntity.createPK();
         List<RouteDetailsEntity> listByPK = routeDetailsDao.getListByPK(pk);
-        return listByPK.size() == 0 || listByPK.size() == 1 && checkequality(routeDetailsEntity, pk);
+        return listByPK.size() == 0 || listByPK.size() == 1 && checkQuality(routeDetailsEntity, pk);
     }
 
-    public boolean checkequality(RouteDetailsEntity routeDetailsEntity, RouteDetailsEntityPK routeDetailsEntityPK) {
+    public boolean checkQuality(RouteDetailsEntity routeDetailsEntity, RouteDetailsEntityPK routeDetailsEntityPK) {
         return routeDetailsEntity.getRouteId() == routeDetailsEntityPK.getRouteId() &&
                 routeDetailsEntity.getStationId() == routeDetailsEntityPK.getStationId() &&
                 routeDetailsEntity.getStationOrder() == routeDetailsEntityPK.getStationOrder();
     }
 
     public List<RouteEntity> getAllRoutes() {
-        return routeService.getAll();
+        return routeService.getAllRouteEntities();
     }
 
     public List<StationEntity> getAllStations() {
         return stationService.getAll();
     }
-
-//    public int getNextStationOrder(RouteDetailsEntity routeDetailsEntity){
-//       return routeDetailsDao.getNextStationOrder(routeDetailsEntity.getRouteId());
-//    }
-
-//    public String getRouteName(){
-//
-//    }
-
-//    public String getStationName(){
-//
-//    }
 
     public List<RouteDetailsEntity> getRouteDetailsByRouteId(int id) {
         return routeDetailsDao.getRouteDetailsByRouteId(id);
@@ -83,9 +71,6 @@ public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEnti
     public void setStationOrder(RouteDetailsEntity routeDetailsEntity) {
         List<Integer> nextStationOrderList = routeDetailsDao.getNextStationOrder(routeDetailsEntity.getRouteId());
         System.out.println("Next station Order Size" + nextStationOrderList.size());
-//        if (nextStationOrderList.size()==0){
-//            routeDetailsEntity.setStationOrder(1);
-//        }
         routeDetailsEntity.setStationOrder(nextStationOrderList.size() + 1);
     }
 
@@ -96,7 +81,7 @@ public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEnti
     }
 
     public RouteEntity getRouteById(int id) {
-        return routeService.get(id);
+        return routeService.getRouteEntityById(id);
     }
 
     public StationEntity getStationById(int id) {
@@ -152,9 +137,9 @@ public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEnti
             for (RouteDetailsEntity entity :
                     nextEntities) {
                 entity.setKm(entity.getKm() - decreaseKm);
-                save(entity);
+                saveRouteDetailsEntity(entity);
                 updateStationOrder(entity, entity.getStationOrder() - 1);
-                save(entity);
+                saveRouteDetailsEntity(entity);
             }
         } else {
             deleteThis(routeDetailsEntity);
@@ -170,28 +155,24 @@ public class RouteDetailsService implements ExtendedCRUDService<RouteDetailsEnti
         return routeDetailsDao.getAllAfter(routeDetailsEntity);
     }
 
-    @Override
-    public RouteDetailsEntity get(RouteDetailsEntityPK routeDetailsEntityPK) {
+    public RouteDetailsEntity getRouteDetailsEntity(RouteDetailsEntityPK routeDetailsEntityPK) {
         return routeDetailsDao.get(routeDetailsEntityPK);
     }
 
-    @Override
-    public List<RouteDetailsEntity> getAll() {
+    public List<RouteDetailsEntity> getAllRouteDetailsEntities() {
         return routeDetailsDao.getAll();
     }
 
-    @Override
-    public RouteDetailsEntity save(RouteDetailsEntity routeDetailsEntity) {
+    public RouteDetailsEntity saveRouteDetailsEntity(RouteDetailsEntity routeDetailsEntity) {
 //        addRefs(routeDetailsEntity);
         return routeDetailsDao.save(routeDetailsEntity);
     }
 
-    @Override
-    public void delete(RouteDetailsEntity routeDetailsEntity) {
+    public void deleteRouteDetailsEntity(RouteDetailsEntity routeDetailsEntity) {
         RouteDetailsEntityPK routeDetailsEntityPK = new RouteDetailsEntityPK(routeDetailsEntity.getRouteId(),
                                                                              routeDetailsEntity.getStationId(),
                                                                              routeDetailsEntity.getStationOrder());
-        RouteDetailsEntity managedEntity = get(routeDetailsEntityPK);
+        RouteDetailsEntity managedEntity = getRouteDetailsEntity(routeDetailsEntityPK);
         updateNextRouteDetailsAndDelete(managedEntity);
     }
 

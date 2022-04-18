@@ -33,7 +33,7 @@ public class RouteDetailsController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("routeDetailsEntities", routeDetailsService.getAll());
+        model.addAttribute("routeDetailsEntities", routeDetailsService.getAllRouteDetailsEntities());
         return "routeDetails/index";
     }
 
@@ -41,7 +41,7 @@ public class RouteDetailsController {
     public String show(@PathVariable("routeId") int routeId, @PathVariable("stationId") int stationId,
                        @PathVariable("stationOrder") int stationOrder, Model model) {
         RouteDetailsEntityPK routeDetailsEntityPK = new RouteDetailsEntityPK(routeId, stationId, stationOrder);
-        model.addAttribute("routeDetailsEntity", routeDetailsService.get(routeDetailsEntityPK));
+        model.addAttribute("routeDetailsEntity", routeDetailsService.getRouteDetailsEntity(routeDetailsEntityPK));
         return "routeDetails/show";
     }
 
@@ -49,10 +49,10 @@ public class RouteDetailsController {
     public String updateKmType(@PathVariable("routeId") int routeId, @PathVariable("stationId") int stationId,
                                @PathVariable("stationOrder") int stationOrder, Model model) {
         RouteDetailsEntityPK routeDetailsEntityPK = new RouteDetailsEntityPK(routeId, stationId, stationOrder);
-        RouteDetailsEntity routeDetailsEntity = routeDetailsService.get(routeDetailsEntityPK);
+        RouteDetailsEntity routeDetailsEntity = routeDetailsService.getRouteDetailsEntity(routeDetailsEntityPK);
         model.addAttribute("routeDetailsEntity", routeDetailsEntity);
 
-        model.addAttribute("routeName", routeService.get(routeId).getName());
+        model.addAttribute("routeName", routeService.getRouteEntityById(routeId).getName());
         model.addAttribute("stationName", stationService.get(stationId).getName());
         return "routeDetails/update-km-type";
     }
@@ -90,7 +90,7 @@ public class RouteDetailsController {
         List<StationEntity> freeStationsList = routeDetailsService.getFreeStations(routeId);
         model.addAttribute("freeStationsList", freeStationsList);
         model.addAttribute("currentRouteId", routeId);
-        model.addAttribute("currentRouteName", routeService.get(routeId).getName());
+        model.addAttribute("currentRouteName", routeService.getRouteEntityById(routeId).getName());
         model.addAttribute("routeDetailsEntities", routeDetailsByRouteId);
         model.addAttribute("routesList", routesList);
         model.addAttribute("stationsList", stationsList);
@@ -118,7 +118,7 @@ public class RouteDetailsController {
     RouteDetailsEntity createRouteDetails(@RequestBody RouteDetailsEntity routeDetailsEntity) {
         System.out.println(routeDetailsEntity);
         routeDetailsService.setUp(routeDetailsEntity);
-        routeDetailsService.save(routeDetailsEntity);
+        routeDetailsService.saveRouteDetailsEntity(routeDetailsEntity);
         return routeDetailsEntity;
     }
 
@@ -137,7 +137,7 @@ public class RouteDetailsController {
         RouteDetailsEntity detailsEntity = new RouteDetailsEntity();
         if (routeDetailsEntity.isPrimaryValuesNotZero(routeDetailsEntity) && routeDetailsService
                 .checkIdentity(routeDetailsEntity)) {
-            detailsEntity = routeDetailsService.save(routeDetailsEntity);
+            detailsEntity = routeDetailsService.saveRouteDetailsEntity(routeDetailsEntity);
         }
 
         return routeDetailsEntity.equals(detailsEntity);
@@ -148,8 +148,8 @@ public class RouteDetailsController {
                                      @PathVariable("station-id") int stationId,
                                      @PathVariable("station-order") int stationOrder, Model model) {
         RouteDetailsEntityPK entityPK = new RouteDetailsEntityPK(routeId, stationId, stationOrder);
-        model.addAttribute("routeDetailsEntity", routeDetailsService.get(entityPK));
-        model.addAttribute("routeName", routeService.get(routeId).getName());
+        model.addAttribute("routeDetailsEntity", routeDetailsService.getRouteDetailsEntity(entityPK));
+        model.addAttribute("routeName", routeService.getRouteEntityById(routeId).getName());
         model.addAttribute("stationName", stationService.get(stationId).getName());
 
         return "routeDetails/delete-alert";
@@ -157,7 +157,7 @@ public class RouteDetailsController {
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("routeDetailsEntity") RouteDetailsEntity routeDetailsEntity) {
-        routeDetailsService.delete(routeDetailsEntity);
+        routeDetailsService.deleteRouteDetailsEntity(routeDetailsEntity);
         return "redirect:/route-details/" + routeDetailsEntity.getRouteId() + "/update";
     }
 

@@ -37,7 +37,7 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
     public void initialize(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         List<RouteDetailsEntity> routeDetailsEntityList = routeDetailsService
                 .getRouteDetailsByRouteId(trainHasScheduleAndRouteEntity.getRouteId());
-        TrainEntity trainEntity = trainsService.get(trainHasScheduleAndRouteEntity.getTrainId());
+        TrainEntity trainEntity = trainsService.getTrainEntity(trainHasScheduleAndRouteEntity.getTrainId());
         int capacity = trainEntity.getCapacity();
         double velocity = trainEntity.getVelocity();
         Timestamp prevDepartureTime = trainHasScheduleAndRouteEntity.getDepartureTime();
@@ -125,7 +125,7 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
         return scheduleDetailsDao.getStationsGroupByLinesId(groupId, lineIdFrom, lineIdTo);
     }
 
-    public boolean moreThanTenMinutesToDepartue(int lineIdFrom) {
+    public boolean moreThanTenMinutesToDeparture(int lineIdFrom) {
         ScheduleDetailsEntity scheduleDetailsEntity = scheduleDetailsDao.get(lineIdFrom);
         long departureTime = scheduleDetailsEntity.getDepartureTime().getTime();
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -140,6 +140,18 @@ public class ScheduleDetailsService implements DefaultCRUDService<ScheduleDetail
 
     public List<Integer> getUsedGroups() {
         return scheduleDetailsDao.getUsedGroups();
+    }
+
+    public boolean isTicketBought(int id) {
+        return scheduleDetailsDao.isTicketBought(id);
+    }
+
+    public boolean isTicketBoughtOnThisRouteGroupId(int roteGroupId) {
+        return scheduleDetailsDao.isTicketBoughtOnThisRouteGroupId(roteGroupId);
+    }
+
+    public boolean isTrainInitialized(int groupId) {
+        return scheduleDetailsDao.isTrainInitialized(groupId);
     }
 
     private Map<String, ScheduleDetailsEntity> getStationsPair(List<ScheduleDetailsEntity> scheduleDetailsEntityList) {

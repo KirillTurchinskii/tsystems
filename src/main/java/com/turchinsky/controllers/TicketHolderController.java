@@ -55,8 +55,8 @@ public class TicketHolderController {
         List<TrainHasScheduleAndRouteEntity> trainHasScheduleAndRouteEntities =
                 trainHasScheduleAndRouteService.getStartedByRoutesGroup();
         model.addAttribute("trainScheduleRouteEntities", trainHasScheduleAndRouteService.getAll());
-        model.addAttribute("routesList", routeService.getAll());
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("routesList", routeService.getAllRouteEntities());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         return "ticketKeepper/indexTrainHasSchedule";
     }
 
@@ -67,12 +67,12 @@ public class TicketHolderController {
                 .get(routeGroupId);
 
         model.addAttribute("trainScheduleEntity", trainHasScheduleAndRouteEntity);
-        model.addAttribute("routeEntity", routeService.get(trainHasScheduleAndRouteEntity.getRouteId()));
-        model.addAttribute("trainEntity", trainsService.get(trainHasScheduleAndRouteEntity.getTrainId()));
+        model.addAttribute("routeEntity", routeService.getRouteEntityById(trainHasScheduleAndRouteEntity.getRouteId()));
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(trainHasScheduleAndRouteEntity.getTrainId()));
         model.addAttribute("departureT", trainHasScheduleAndRouteEntity.getDepartureTime());
         model.addAttribute("ticketsList", ticketService.getByRouteGroupId(routeGroupId));
         model.addAttribute("passengersLst", ticketService.getHoldersByRouteGroupId(routeGroupId));
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         model.addAttribute("stationsList", stationService.getAll());
         model.addAttribute("scheduleDetails", scheduleDetailsService.getAll());
         List<ScheduleDetailsEntity> all = scheduleDetailsService.getAll();
@@ -83,8 +83,8 @@ public class TicketHolderController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("trainScheduleRouteEntities", trainHasScheduleAndRouteService.getAll());
-        model.addAttribute("routesList", routeService.getAll());
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("routesList", routeService.getAllRouteEntities());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         return "trainScheduleRoute/create";
     }
 
@@ -119,7 +119,7 @@ public class TicketHolderController {
     TrainHasScheduleAndRouteEntity createTSR(
             @RequestBody TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         trainHasScheduleAndRouteEntity
-                .setFreeSeats(trainsService.get(trainHasScheduleAndRouteEntity.getTrainId()).getCapacity());
+                .setFreeSeats(trainsService.getTrainEntity(trainHasScheduleAndRouteEntity.getTrainId()).getCapacity());
         Timestamp departureTime = trainHasScheduleAndRouteEntity.getDepartureTime();
         System.out.println(departureTime);
         TimeZone timeZone = TimeZone.getDefault();

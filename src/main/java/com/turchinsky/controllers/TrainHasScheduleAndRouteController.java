@@ -40,8 +40,8 @@ public class TrainHasScheduleAndRouteController {
     @GetMapping
     public String index(Model model) {
         model.addAttribute("trainScheduleRouteEntities", trainHasScheduleAndRouteService.getAll());
-        model.addAttribute("routesList", routeService.getAll());
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("routesList", routeService.getAllRouteEntities());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         return "trainScheduleRoute/index";
     }
 
@@ -53,8 +53,8 @@ public class TrainHasScheduleAndRouteController {
                 .getByTrainRoteDepartureTime(trainId, roteId, departureTime);
 
         model.addAttribute("trainScheduleEntity", trainHasScheduleAndRouteEntity);
-        model.addAttribute("routeEntity", routeService.get(roteId));
-        model.addAttribute("trainEntity", trainsService.get(trainId));
+        model.addAttribute("routeEntity", routeService.getRouteEntityById(roteId));
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(trainId));
         model.addAttribute("departureT", trainHasScheduleAndRouteEntity.getDepartureTime());
         return "trainScheduleRoute/show";
     }
@@ -62,8 +62,8 @@ public class TrainHasScheduleAndRouteController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("trainScheduleRouteEntities", trainHasScheduleAndRouteService.getAll());
-        model.addAttribute("routesList", routeService.getAll());
-        model.addAttribute("trainsList", trainsService.getAll());
+        model.addAttribute("routesList", routeService.getAllRouteEntities());
+        model.addAttribute("trainsList", trainsService.getAllTrainEntities());
         return "trainScheduleRoute/create";
     }
 
@@ -73,6 +73,18 @@ public class TrainHasScheduleAndRouteController {
     boolean startTrain(@RequestBody TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         scheduleDetailsService.initialize(trainHasScheduleAndRouteEntity);
         return true;
+    }
+
+    @RequestMapping(value = "check-tickets/{group-id}", method = RequestMethod.GET,
+                    headers = {"Accept=application/json", "Content-Type=application/json"})
+    public @ResponseBody boolean isTicketBoughtOnThisRouteGroupId(@PathVariable("group-id") int groupId) {
+        return trainHasScheduleAndRouteService.isTicketBoughtOnThisRouteGroupId(groupId);
+    }
+
+    @RequestMapping(value = "check-group-id/{group-id}", method = RequestMethod.GET,
+                    headers = {"Accept=application/json", "Content-Type=application/json"})
+    public @ResponseBody boolean isTrainInitialized(@PathVariable("group-id") int groupId) {
+        return trainHasScheduleAndRouteService.isTrainInitialized(groupId);
     }
 
 
@@ -98,7 +110,7 @@ public class TrainHasScheduleAndRouteController {
     TrainHasScheduleAndRouteEntity createTSR(
             @RequestBody TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         trainHasScheduleAndRouteEntity
-                .setFreeSeats(trainsService.get(trainHasScheduleAndRouteEntity.getTrainId()).getCapacity());
+                .setFreeSeats(trainsService.getTrainEntity(trainHasScheduleAndRouteEntity.getTrainId()).getCapacity());
         Timestamp departureTime = trainHasScheduleAndRouteEntity.getDepartureTime();
         System.out.println(departureTime);
         TimeZone timeZone = TimeZone.getDefault();
@@ -109,23 +121,12 @@ public class TrainHasScheduleAndRouteController {
     }
 
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE,
                     headers = {"Accept=application/json", "Content-Type=application/json"})
     public void deleteTSR(
             @RequestBody TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         trainHasScheduleAndRouteService.delete(trainHasScheduleAndRouteEntity);
 //        return "http://localhost:8080/train-schedule-route";
-    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-                    headers = {"Accept=application/json", "Content-Type=application/json"})
-    public @ResponseBody
-    TrainHasScheduleAndRouteEntity test(@RequestBody TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity
-                                       ) {
-        System.out.println(trainHasScheduleAndRouteEntity);
-
-//        trainHasScheduleAndRouteService.delete(trainHasScheduleAndRouteEntity);
-        return trainHasScheduleAndRouteEntity;
     }
 
 }

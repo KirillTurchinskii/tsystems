@@ -5,18 +5,19 @@
     <title>Delete Route</title>
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../../../scripts/deleteRoute.js"></script>
 </head>
 <body>
-<form th:action="@{/routes/delete}" th:method="post" th:object="${routeEntity}">
+<!--<form th:action="@{/routes/delete}" th:method="post" th:object="${routeEntity}">-->
     <h1>Are you sure you want to delete This route?</h1>
     <p th:text="${routeEntity.getId()}">VALUE</p>
-    <input id="id" th:field="*{id}" type="hidden">
+    <input id="id" type="hidden">
     <p th:text="${routeEntity.getName()}">VALUE</p>
-    <input id="name" th:field="*{name}" type="hidden">
+    <input id="name" type="hidden">
     <p>
-        <input class="btn btn-danger" type="submit" value="Delete anyways"/>
+        <button class="btn btn-danger"  type="button" id="deleteRouteButton" value="Delete"/>
     </p>
-</form>
+<!--</form>-->
 </body>
 </html>

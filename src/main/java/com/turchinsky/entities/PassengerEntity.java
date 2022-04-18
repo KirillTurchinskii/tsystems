@@ -2,6 +2,8 @@ package com.turchinsky.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
 
@@ -23,17 +25,33 @@ public class PassengerEntity {
 
     @Basic
     @Column(name = "birth_date")
+    @NotNull
     private Date birthDate;
 
     @Basic
     @Column(name = "username", nullable = false)
+    @NotNull
     private String username;
 
     @Basic
     @Column(name = "email")
+    @NotNull
+    @Email
     private String email;
 
-//    @SuppressWarnings("JpaAttributeTypeInspection")
+    public PassengerEntity() {
+    }
+
+    public PassengerEntity(int id, String name, String surname, Date birthDate, String username, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.username = username;
+        this.email = email;
+    }
+
+    //    @SuppressWarnings("JpaAttributeTypeInspection")
 //    @OneToMany(mappedBy = "refPassengerEntity")
 //    List<TicketEntity> refTicketEntities;
 

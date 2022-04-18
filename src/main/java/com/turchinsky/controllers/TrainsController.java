@@ -19,13 +19,13 @@ public class TrainsController {
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("trainEntities", trainsService.getAll());
+        model.addAttribute("trainEntities", trainsService.getAllTrainEntities());
         return "trains/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.get(id));
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/show";
     }
 
@@ -39,7 +39,7 @@ public class TrainsController {
     public String create(@ModelAttribute("train") TrainEntity trainEntity) {
         if (trainEntity.getNumber() != null && !trainEntity.getNumber().equals("") && trainEntity
                 .getCapacity() != 0 && trainsService.checkNumberIdentity(trainEntity.getNumber(), trainEntity)) {
-            trainsService.save(trainEntity);
+            trainsService.saveTrainEntity(trainEntity);
             return "redirect:/trains";
         } else {
             return "redirect:/trains/new-train";
@@ -48,7 +48,7 @@ public class TrainsController {
 
     @GetMapping("/{id}/update")
     public String changeTrain(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.get(id));
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/update-train";
     }
 
@@ -56,7 +56,7 @@ public class TrainsController {
     public String update(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
         if (trainEntity.getNumber() != null && trainEntity.getCapacity() != 0 && trainsService
                 .checkNumberIdentity(trainEntity.getNumber(), trainEntity)) {
-            trainsService.save(trainEntity);
+            trainsService.saveTrainEntity(trainEntity);
             return "redirect:/trains/" + trainEntity.getId();
         } else {
             return "redirect:/trains/" + trainEntity.getId() + "/update";
@@ -65,13 +65,13 @@ public class TrainsController {
 
     @GetMapping("/{id}/delete")
     public String deleteTrain(@PathVariable("id") int id, Model model) {
-        model.addAttribute("trainEntity", trainsService.get(id));
+        model.addAttribute("trainEntity", trainsService.getTrainEntity(id));
         return "trains/delete-alert";
     }
 
     @PostMapping("/delete")
     public String delete(@ModelAttribute("trainEntity") TrainEntity trainEntity) {
-        trainsService.delete(trainEntity);
+        trainsService.deleteTrainEntity(trainEntity);
         return "redirect:/trains";
     }
 

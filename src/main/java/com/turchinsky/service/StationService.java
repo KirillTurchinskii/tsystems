@@ -11,15 +11,21 @@ import java.util.List;
 public class StationService implements DefaultCRUDService<StationEntity> {
 
     private final StationDao stationDao;
+    private ScheduleDetailsService scheduleDetailsService;
 
     public StationService(StationDao stationDao) {
         this.stationDao = stationDao;
+    }
+
+    public void setScheduleDetailsService(ScheduleDetailsService scheduleDetailsService) {
+        this.scheduleDetailsService = scheduleDetailsService;
     }
 
     public boolean checkNameIdentity(String name) {
         List<StationEntity> byName = stationDao.getByName(name);
         return byName.size() == 0;
     }
+
 
     @Override
     public List<StationEntity> getAll() {

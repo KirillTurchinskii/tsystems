@@ -23,20 +23,21 @@ public class StationDao implements Dao<StationEntity> {
 
     private final EntityManager entityManager = emFactoryObj.createEntityManager();
 
-    @Override
-    public StationEntity get(int id) {
-        return entityManager.find(StationEntity.class, id);
-    }
-
     public List<StationEntity> getByName(String name) {
         Query query = entityManager.createQuery("SELECT e FROM StationEntity e where e.name=" + "'" + name + "'");
         return query.getResultList();
     }
 
     @Override
+    public StationEntity get(int id) {
+        return entityManager.find(StationEntity.class, id);
+    }
+
+    @Override
     public List<StationEntity> getAll() {
         Query query = entityManager.createQuery("SELECT e FROM StationEntity e");
-        return query.getResultList();
+        List resultList = query.getResultList();
+        return resultList;
     }
 
     @Override

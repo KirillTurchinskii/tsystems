@@ -34,6 +34,25 @@ public class TrainEntity {
 //    private List<TrainHasScheduleAndRouteEntity> refTrainHasScheduleAndRouteEntities;
 //
 
+
+    public TrainEntity() {
+    }
+
+    public TrainEntity(String number, String type, int capacity, int velocity) {
+        this.number = number;
+        this.type = type;
+        this.capacity = capacity;
+        this.velocity = velocity;
+    }
+
+    public TrainEntity(int id, String number, String type, int capacity, int velocity) {
+        this.id = id;
+        this.number = number;
+        this.type = type;
+        this.capacity = capacity;
+        this.velocity = velocity;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

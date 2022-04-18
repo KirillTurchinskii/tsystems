@@ -38,6 +38,25 @@ public class TrainHasScheduleAndRouteService
         return trainHasScheduleAndRouteDao.getByTrainRoteDepartureTime(trainId, routeId, departureTime);
     }
 
+
+    public boolean isTicketBoughtOnThisRouteGroupId(int roteGroupId) {
+        return scheduleDetailsService.isTicketBoughtOnThisRouteGroupId(roteGroupId);
+    }
+
+    public List<TrainHasScheduleAndRouteEntity> getStartedByRoutesGroup() {
+        List<Integer> usedGroups = scheduleDetailsService.getUsedGroups();
+        List<TrainHasScheduleAndRouteEntity> trainHasScheduleAndRouteEntities = new ArrayList<>();
+        for (Integer i :
+                usedGroups) {
+            trainHasScheduleAndRouteEntities.add(get(i));
+        }
+        return trainHasScheduleAndRouteEntities;
+    }
+
+    public boolean isTrainInitialized(int groupId) {
+        return scheduleDetailsService.isTrainInitialized(groupId);
+    }
+
     @Override public TrainHasScheduleAndRouteEntity get(int id) {
         return trainHasScheduleAndRouteDao.get(id);
     }
@@ -50,16 +69,6 @@ public class TrainHasScheduleAndRouteService
     @Override
     public TrainHasScheduleAndRouteEntity save(TrainHasScheduleAndRouteEntity trainHasScheduleAndRouteEntity) {
         return trainHasScheduleAndRouteDao.save(trainHasScheduleAndRouteEntity);
-    }
-
-    public List<TrainHasScheduleAndRouteEntity> getStartedByRoutesGroup() {
-        List<Integer> usedGroups = scheduleDetailsService.getUsedGroups();
-        List<TrainHasScheduleAndRouteEntity> trainHasScheduleAndRouteEntities = new ArrayList<>();
-        for (Integer i :
-                usedGroups) {
-            trainHasScheduleAndRouteEntities.add(get(i));
-        }
-        return trainHasScheduleAndRouteEntities;
     }
 
     @Override

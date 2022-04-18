@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Repository
@@ -77,16 +79,32 @@ public class ScheduleDetailsDao implements Dao<ScheduleDetailsEntity> {
         return scheduleDetailsEntity;
     }
 
+    public boolean isTicketBought(int id) {
+        Query query = entityManager
+                .createQuery("SELECT e FROM ScheduleDetailsEntity e where e.orderedSeats>0 and e.trainId=" + id);
+        List list = Optional.ofNullable(query.getResultList()).orElse(Collections.emptyList());
+        return list.size() > 0;
+    }
+
+    public boolean isTicketBoughtOnThisRouteGroupId(int roteGroupId) {
+        Query query = entityManager.createQuery(
+                "SELECT e FROM ScheduleDetailsEntity e WHERE e.orderedSeats>0 and e.routeGroupId=" + roteGroupId);
+        List list = Optional.ofNullable(query.getResultList()).orElse(Collections.emptyList());
+        return list.size() > 0;
+    }
+
+    public boolean isTrainInitialized(int groupId) {
+        Query query =
+                entityManager.createQuery(
+                        "SELECT e FROM ScheduleDetailsEntity e WHERE e.routeGroupId=" + groupId);
+        List list = Optional.ofNullable(query.getResultList()).orElse(Collections.emptyList());
+        return list.size() > 0;
+    }
+
     @Override
     public ScheduleDetailsEntity get(int id) {
         return entityManager.find(ScheduleDetailsEntity.class, id);
     }
-
-//    @Override
-//    public List<ScheduleDetailsEntity> getAll() {
-//        Query query = entityManager.createQuery("SELECT e FROM TrainHasScheduleAndRouteEntity e");
-//        return query.getResultList();
-//    }
 
     @Override
     public List<ScheduleDetailsEntity> getAll() {
